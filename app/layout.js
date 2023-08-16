@@ -13,6 +13,7 @@ export default function RootLayout({ children }) {
     { path: "/contact", name: "Contact" },
     { path: "/jeu", name: "Jeu" },
     { path: "/users", name: "Users" },
+    { path: "/music", name: "Music" },
   ];
   return (
     <html lang="en" className="light">
