@@ -24,3 +24,10 @@ input[type="number"]::-webkit-outer-spin-button {
 .nativeAudioPlayer {
   display: none;
 }
+
+.btn {
+  @apply px-4 text-sm py-1 rounded border border-gray-300 bg-gray-200 text-gray-900;
+}
+input {
+  @apply border cursor-pointer rounded border-gray-300 px-3 py-2 outline-none text-gray-600;
+}

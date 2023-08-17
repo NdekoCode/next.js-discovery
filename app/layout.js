@@ -14,11 +14,12 @@ export default function RootLayout({ children }) {
     { path: "/jeu", name: "Jeu" },
     { path: "/users", name: "Users" },
     { path: "/music", name: "Music" },
+    { path: "/todos", name: "Todos" },
   ];
   return (
     <html lang="en" className="light">
       <AppContextProvider>
-        <body>
+        <body class="dark:bg-gray-900 dark:text-white bg-white text-gray-900">
           <nav className="bg-white border-b border-gray-200 shadow-lg shadow-gray-100 ">
             <div className="container flex items-center justify-center p-6 mx-auto text-gray-600 capitalize ">
               {links.map((link, index) => (
