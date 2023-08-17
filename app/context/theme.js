@@ -26,7 +26,6 @@ export const AppContextProvider = memo(({ children }) => {
   };
 
   useEffect(() => {
-    console.log("Component mounted");
     (async () => {
       try {
         const response = await fetch(

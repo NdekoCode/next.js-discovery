@@ -6,13 +6,10 @@ const jeu = () => {
   const decrement = () => setCounter((count) => (count >= 1 ? count - 1 : 0));
   useEffect(() => {
     const timer = window.setInterval(() => {
-      console.log("Is mounted");
       increment();
     }, 1000);
     return () => {
-      console.log(timer);
       window.clearInterval(timer);
-      console.log("Is unmounted");
     };
   }, []);
   return (

@@ -12,7 +12,6 @@ const contact = () => {
     return number * Math.random();
   };
   const handleChange = (evt) => {
-    console.log(evt.target.value);
     setLetter(evt.target.value);
   };
   const value = useMemo(() => generateRandomNumber(), [number]);

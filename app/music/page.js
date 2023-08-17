@@ -4,7 +4,6 @@ const music = () => {
   const [isPlaying, setIsplaying] = useState(false);
   const audioRef = useRef(null);
   const handlePlayOrPause = () => {
-    console.log(audioRef.current);
     if (isPlaying) {
       audioRef.current.pause();
     } else {

@@ -31,7 +31,6 @@ const todos = () => {
   const [state, dispatch] = useReducer(reducer, { tasks: myTodos });
   const [newTodo, setNewTodo] = useState("");
   const handleTodo = (evt) => {
-    console.log(evt.target.value);
     setNewTodo(evt.target.value);
   };
   const addNewTodo = () => {
@@ -45,7 +44,6 @@ const todos = () => {
     }
   };
   const deleteTodo = (todo) => {
-    console.log(todo);
     if (todo?.id) {
       dispatch({ type: "DELETE_TASK", payload: todo?.id });
     }
