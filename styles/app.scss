@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .prose {
+        @apply max-w-7xl mx-auto mt-5 prose-blue prose-sm;
+    }
+}

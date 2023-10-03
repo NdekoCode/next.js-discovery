@@ -4,8 +4,9 @@ import { useCounterContext } from "../context/CounterContext";
 const BlogContent = () => {
   const { count, increment } = useCounterContext();
   return (
-    <div>
+    <div className="prose">
       <main>
+        <h1>Mon blog</h1>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos
           excepturi, ratione eveniet cum ullam autem assumenda modi. Qui iste
