@@ -1,8 +1,11 @@
 import Link from "next/link";
+import { NextRouter, useRouter } from "next/router";
 import { useCounterContext } from "../context/CounterContext";
 
 const BlogContent = () => {
   const { count, increment } = useCounterContext();
+  const router: NextRouter = useRouter();
+  const goHome = () => router.push("/");
   return (
     <div className="prose">
       <main>
@@ -33,7 +36,9 @@ const BlogContent = () => {
           aspernatur, earum expedita quidem. Iste nisi facilis aspernatur
           doloribus vel perferendis?
         </p>
-        <Link href="/">Home page</Link>
+        <Link href="/">
+          <a onClick={goHome}>Home page</a>
+        </Link>
       </footer>
     </div>
   );
