@@ -36,8 +36,8 @@ const BlogContent = () => {
           aspernatur, earum expedita quidem. Iste nisi facilis aspernatur
           doloribus vel perferendis?
         </p>
-        <Link href="/">
-          <a onClick={goHome}>Home page</a>
+        <Link href="/" onClick={goHome}>
+          Home page
         </Link>
       </footer>
     </div>
