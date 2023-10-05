@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { NextRouter, useRouter } from "next/router";
 import { useEffect } from "react";
 
@@ -11,6 +12,10 @@ export default function Read() {
   }, []);
   return (
     <>
+      <Head>
+        <title>L'article {router.query.slug}</title>
+        <meta name="description" content={`L'article ${router.query.slug}`} />
+      </Head>
       <div className="prose">
         <h1>Mon article </h1>
       </div>

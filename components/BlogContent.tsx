@@ -1,7 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 import { NextRouter, useRouter } from "next/router";
 import { useCounterContext } from "../context/CounterContext";
-
+import image1 from "../public/assets/images/01.jpg";
+import image2 from "../public/assets/images/02.jpg";
+import image3 from "../public/assets/images/03.jpg";
 const BlogContent = () => {
   const { count, increment } = useCounterContext();
   const router: NextRouter = useRouter();
@@ -23,9 +26,28 @@ const BlogContent = () => {
           nam laborum nesciunt et! Tempora deleniti unde eaque neque vel eum.
         </p>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos
-          excepturi, ratione eveniet cum ullam autem assumenda modi. Qui iste
-          nam laborum nesciunt et! Tempora deleniti unde eaque neque vel eum.
+          <Image
+            src={image1}
+            layout="responsive"
+            placeholder="blur"
+            width={2400}
+            height={1600}
+            alt="Image"
+          />
+          <Image
+            src={image2}
+            layout="responsive"
+            width={4447}
+            height={6670}
+            alt="Image"
+          />
+          <Image
+            src={image3}
+            width={5064}
+            layout="responsive"
+            height={3376}
+            alt="Image"
+          />
         </p>
       </main>
       <footer>
