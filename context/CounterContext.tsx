@@ -1,6 +1,7 @@
 import {
   createContext,
-  FunctionComponent,
+  FC,
+  memo,
   PropsWithChildren,
   useContext,
   useMemo,
@@ -20,9 +21,9 @@ type CounterContextPropsType = PropsWithChildren<{
   start?: number;
   step?: number;
 }>;
-export const CounterContextProvider: FunctionComponent<
+export const CounterContextProvider: FC<
   CounterContextPropsType
-> = ({ start = 0, step = 1, children }) => {
+> = memo(({ start = 0, step = 1, children }) => {
   const [count, setCount] = useState<number>(start);
   const increment = () => setCount((c) => c + step);
   const decrement = () => setCount((c) => c - step);
@@ -37,5 +38,5 @@ export const CounterContextProvider: FunctionComponent<
   return (
     <CounterContext.Provider value={value}>{children}</CounterContext.Provider>
   );
-};
+});
 export const useCounterContext = () => useContext(CounterContext);
