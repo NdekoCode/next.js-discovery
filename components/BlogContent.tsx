@@ -11,7 +11,6 @@ type BlogContentProps = {
   posts: Post[];
 };
 const BlogContent: FC<BlogContentProps> = ({ posts }) => {
-  console.log(posts);
   const { count, increment } = useCounterContext();
   const router: NextRouter = useRouter();
   const goHome = () => router.push("/");
@@ -29,7 +28,7 @@ const BlogContent: FC<BlogContentProps> = ({ posts }) => {
                   key={post.id}
                   className="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] h-full p-4 md:p-7"
                 >
-                    <h3 className="text-lg font-bold text-gray-800 dark:text-white">
+                    <h3 className="text-lg font-bold text-gray-800 capitalize dark:text-white">
                       {post.title}
                     </h3>
                     <p className="mt-2 text-gray-800 dark:text-gray-400">
@@ -177,5 +176,4 @@ const BlogContent: FC<BlogContentProps> = ({ posts }) => {
     </div>
   );
 };
-
 export default BlogContent;
