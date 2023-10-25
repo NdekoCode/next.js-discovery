@@ -1,14 +1,26 @@
 import Head from "next/head";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-export default function about() {
+export default function About() {
+  const [isMounted, setIsMounted] = useState(false);
+  const { t } = useTranslation("about");
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+  if (!isMounted) {
+    return null;
+  }
+  console.log(t);
   return (
     <>
       <Head>
-        <title>A propos de nous</title>
+        <title>{t("title")}</title>
       </Head>
       <div className="prose">
-        <h1>About</h1>
+        <h1>{t("title-1")}</h1>
       </div>
     </>
   );
 }
+

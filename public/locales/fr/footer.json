@@ -1,0 +1,4 @@
+{
+  "description": "Ceci est un composant non-page qui nécessite son propre espace de noms",
+  "helpLocize": "En utilisant <1>locize</1>, vous soutenez directement l'avenir de <3>i18next</3>."
+}
