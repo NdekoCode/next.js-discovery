@@ -7,7 +7,7 @@ import { useLanguage } from "../hooks/useLanguage";
 import i18n from "../ni18n.config";
 import "../styles/app.scss";
 function MyApp({ Component, pageProps }: AppProps) {
-  const { userLanguage, handleLanguageChange } = useLanguage();
+  const { userLanguage } = useLanguage();
   useSyncLanguage(userLanguage)
   useEffect(() => {
     require("preline");
