@@ -78,7 +78,7 @@ export default function Navbar() {
             value={userLanguage}
             defaultValue={userLanguage}
             onChange={(e) => handleLanguageChange(e.target.value)}
-            className="py-3 px-4 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+            className="py-3 px-4 max-w-[150px] pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
           >
             <option selected>Open this select menu</option>
             <option value="en">Anglais</option>
