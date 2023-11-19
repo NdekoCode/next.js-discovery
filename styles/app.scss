@@ -6,4 +6,30 @@
     .prose {
         @apply max-w-7xl mx-auto mt-5 prose-blue prose-sm;
     }
+
+    .container {
+        @apply max-w-7xl px-4 mx-auto;
+
+        @screen lg {
+            @apply px-0;
+        }
+    }
+
+    .modal {
+        @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 min-w-[250px] bg-white rounded-lg shadow-md shadow-gray-200 border border-gray-100 z-20;
+    }
+
+}
+
+
+.btn {
+    @apply px-6 py-3 text-base rounded border-red-900 bg-white text-red-900;
+
+    &.btn-alert {
+        @apply bg-red-900 text-white;
+    }
+}
+
+.backdrop-item {
+    @apply bg-gray-900/50 fixed inset-0 z-10 overflow-hidden;
 }

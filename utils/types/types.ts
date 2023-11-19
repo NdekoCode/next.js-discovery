@@ -4,3 +4,12 @@ export type Post = {
     title:string;
     body:string
 }
+
+export type MeetupProps = {
+    id:number|string,
+    title:string,
+    image:string,
+    address:string;
+    description:string;
+
+}
