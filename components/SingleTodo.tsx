@@ -1,30 +1,33 @@
-'use client'
+"use client";
 import { FC, useState } from "react";
-import Backdrop from "./Backdrop";
-import Modal from "./Modal";
+import { Modal } from "./index";
+import { Backdrop } from "./ui/Backdrop";
 
-const SingleTodo:FC = ()=>{
-    const  [modalOpen,setModalOpen] = useState<boolean>(false);
-    const toggleModalHandler =<T,> (value:boolean|null|T = null):void=>{
-        if(value && typeof value=="boolean"){
-            setModalOpen(value);
-        }
-        setModalOpen(v=>!v);
-        
+export const SingleTodo: FC = () => {
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const toggleModalHandler = <T,>(value: boolean | null | T = null): void => {
+    if (value && typeof value == "boolean") {
+      setModalOpen(value);
     }
-    return (<div className="p-3 border border-gray-100 flex flex-col gap-y-5 rounded-md shadow-md shadow-gray-200 min-w-[250px] w-max">
-
-        <h1>My todos</h1>
-        <div className="flex flex-col gap-y-5">
-            <h1 className="text-3xl font-bold">TITLE</h1>
-            <div>
-            <button onClick={toggleModalHandler} className="btn btn-alert">Delete </button></div>
+    setModalOpen((v) => !v);
+  };
+  return (
+    <div className="p-3 border border-gray-100 flex flex-col gap-y-5 rounded-md shadow-md shadow-gray-200 min-w-[250px] w-max">
+      <h1>My todos</h1>
+      <div className="flex flex-col gap-y-5">
+        <h1 className="text-3xl font-bold">TITLE</h1>
+        <div>
+          <button onClick={toggleModalHandler} className="btn btn-alert">
+            Delete{" "}
+          </button>
         </div>
-        {modalOpen && <>
-        <Modal onActive={toggleModalHandler}/>
-        <Backdrop  onActive={toggleModalHandler}/>
-        </>}
-    </div>)
-}
-
-export default SingleTodo;
+      </div>
+      {modalOpen && (
+        <>
+          <Modal onActive={toggleModalHandler} />
+          <Backdrop onActive={toggleModalHandler} />
+        </>
+      )}
+    </div>
+  );
+};

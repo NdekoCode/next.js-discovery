@@ -1,20 +1,22 @@
 import { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
-import BlogContent from "../../components/BlogContent";
+import { BlogContent } from "../../components";
 import { CounterContextProvider } from "../../context/CounterContext";
 import { Post } from "../../utils/types/types";
 type BlogProps = {
   posts: Post[];
-  date:string
+  date: string;
 };
-const Blog: NextPage<BlogProps> = ({ posts ,date}) => {
+const Blog: NextPage<BlogProps> = ({ posts, date }) => {
   return (
     <CounterContextProvider>
       <Head>
         <title>Mon blog</title>
         <meta name="description" content="A simple blog with next.js" />
       </Head>
-      <div><strong>{date}</strong></div>
+      <div>
+        <strong>{date}</strong>
+      </div>
       <BlogContent posts={posts} />
     </CounterContextProvider>
   );
@@ -27,9 +29,9 @@ export const getStaticProps: GetStaticProps<BlogProps> = async () => {
   return {
     props: {
       posts,
-      date:( new Date()).toString()
+      date: new Date().toString(),
     },
-    revalidate:15
+    revalidate: 15,
   };
 };
 

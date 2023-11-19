@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-const Backdrop: FC<{
+export const Backdrop: FC<{
   isActive?: boolean;
   onActive: <T>(v: boolean | T) => void;
 }> = ({ isActive = undefined, onActive }) => {
@@ -11,4 +11,3 @@ const Backdrop: FC<{
     />
   );
 };
-export default Backdrop;

@@ -1,20 +1,20 @@
 import Image from "next/image";
 import { FC } from "react";
-import { MeetupProps } from "../utils/types/types";
-
-const Meetup: FC<{meetup:MeetupProps}> = ({meetup}) => {
+import { MeetupProps } from "../../utils/types/types";
+import { Card } from "../ui";
+export const Meetup: FC<{ meetup: MeetupProps }> = ({ meetup }) => {
   return (
-    <div className="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+    <Card>
       <Image
-      width={250}
-      height={100}
-        className="inline-block w-full h-auto rounded-t-xl"
+        width={250}
+        height={170}
+        className="inline-block w-full h-[175px] object-cover rounded-t-xl"
         src={meetup.image}
         alt="Image Description"
       />
       <div className="p-4 md:p-5">
         <h3 className="text-lg font-bold text-gray-800 dark:text-white">
-         {meetup.title}
+          {meetup.title}
         </h3>
         <p className="mt-1 text-gray-500 dark:text-gray-400">
           {meetup.description}
@@ -26,8 +26,6 @@ const Meetup: FC<{meetup:MeetupProps}> = ({meetup}) => {
           Go somewhere
         </a>
       </div>
-    </div>
+    </Card>
   );
 };
-
-export default Meetup;

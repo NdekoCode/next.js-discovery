@@ -33,3 +33,47 @@
 .backdrop-item {
     @apply bg-gray-900/50 fixed inset-0 z-10 overflow-hidden;
 }
+
+body.dark {
+    header {
+        nav {
+            a {
+                &.active {
+                    @apply text-blue-500;
+
+                }
+            }
+        }
+    }
+
+}
+
+header {
+    nav {
+        a {
+            &.active {
+                @apply font-medium text-blue-600;
+
+                &:hover {
+                    @apply text-blue-400;
+                }
+            }
+        }
+    }
+}
+
+.title {
+    @apply font-bold my-1 text-base;
+
+    &.title-1 {
+        @apply text-4xl;
+    }
+
+    &.title-2 {
+        @apply text-3xl;
+    }
+
+    &.title-3 {
+        @apply text-2xl;
+    }
+}
