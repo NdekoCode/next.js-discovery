@@ -1,11 +1,10 @@
 import Image from "next/image";
 import { FC } from "react";
-import { MeetupProps } from "../utils/types/types";
-
+import { MeetupProps } from "../../utils/types/types";
+import { Card } from "../ui";
 const Meetup: FC<{meetup:MeetupProps}> = ({meetup}) => {
   return (
-    <div className="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-      <Image
+    <Card><Image
       width={250}
       height={100}
         className="inline-block w-full h-auto rounded-t-xl"
@@ -26,7 +25,7 @@ const Meetup: FC<{meetup:MeetupProps}> = ({meetup}) => {
           Go somewhere
         </a>
       </div>
-    </div>
+    </Card>
   );
 };
 

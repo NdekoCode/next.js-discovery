@@ -1,7 +1,7 @@
 'use client'
 import { FC, useState } from "react";
-import Backdrop from "./Backdrop";
 import Modal from "./Modal";
+import Backdrop from "./ui/Backdrop";
 
 const SingleTodo:FC = ()=>{
     const  [modalOpen,setModalOpen] = useState<boolean>(false);
