@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import Head from "next/head";
 import { Meetup } from "../components/meetup";
-import { DUMMY_DATA } from "../utils/types/data/constants";
+import { DUMMY_DATA } from "../utils/data/constants";
 const MeetupPage: NextPage = () => {
   return (
     <>

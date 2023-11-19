@@ -1,8 +1,34 @@
-import { FC, FormEvent } from "react";
+import { FC, FormEvent, useRef } from "react";
 import classes from "../../styles/NewMeetupForm.module.scss";
-export const NewMeetupForm: FC = () => {
+import { generateId } from "../../utils/data/constants";
+import { metaDataType } from "../../utils/types";
+
+export const NewMeetupForm: FC<{
+  onGetMetaData: (metaData: metaDataType) => void;
+}> = ({ onGetMetaData }) => {
+  const titleInputRef = useRef<HTMLInputElement>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const addressInputRef = useRef<HTMLInputElement>(null);
+  const descriptionInputRef = useRef<HTMLTextAreaElement>(null);
   const handleSubmit: (e: FormEvent<HTMLFormElement>) => void = (e) => {
     e.preventDefault();
+    const titleValue = titleInputRef.current?.value || "";
+    const imagevalue = imageInputRef.current?.value || "";
+    const addressValue = addressInputRef.current?.value || "";
+    const descriptionValue = descriptionInputRef.current?.value || "";
+    const metaData = {
+      id: generateId(),
+      title: titleValue,
+      image: imagevalue,
+      address: addressValue,
+      description: descriptionValue,
+    };
+    onGetMetaData(metaData);
+
+    titleInputRef.current!.value = "";
+    imageInputRef.current!.value = "";
+    addressInputRef.current!.value = "";
+    descriptionInputRef.current!.value = "";
   };
   return (
     <div>
@@ -22,6 +48,7 @@ export const NewMeetupForm: FC = () => {
                 <input
                   type="text"
                   required
+                  ref={titleInputRef}
                   id="meetup-title"
                   className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm border  outline-none focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                   placeholder="Meetup Title"
@@ -38,6 +65,7 @@ export const NewMeetupForm: FC = () => {
                 <input
                   type="url"
                   required
+                  ref={imageInputRef}
                   id="meetup-image"
                   className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm border  outline-none focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                   placeholder="Meetup Image"
@@ -52,6 +80,7 @@ export const NewMeetupForm: FC = () => {
                 </label>
                 <input
                   type="text"
+                  ref={addressInputRef}
                   required
                   id="meetup-address"
                   className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm border  outline-none focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
@@ -68,6 +97,7 @@ export const NewMeetupForm: FC = () => {
                 <div className="mt-1">
                   <textarea
                     id="meetup-description"
+                    ref={descriptionInputRef}
                     name="meetup-description"
                     required
                     rows={3}
