@@ -1,4 +1,4 @@
-import SingleTodo from "../components/SingleTodo";
+import { SingleTodo } from "../components";
 
 const MyTodoPage = () => {
   return (

@@ -7,8 +7,8 @@ export const Meetup: FC<{ meetup: MeetupProps }> = ({ meetup }) => {
     <Card>
       <Image
         width={250}
-        height={100}
-        className="inline-block w-full h-auto rounded-t-xl"
+        height={170}
+        className="inline-block w-full h-[175px] object-cover rounded-t-xl"
         src={meetup.image}
         alt="Image Description"
       />
@@ -29,4 +29,3 @@ export const Meetup: FC<{ meetup: MeetupProps }> = ({ meetup }) => {
     </Card>
   );
 };
-
