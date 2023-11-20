@@ -4,8 +4,12 @@ import { useFavoriteContext } from "../../stores/FavoritesContext";
 import { MeetupProps } from "../../utils/types/types";
 import { Card } from "../ui";
 export const Meetup: FC<{ meetup: MeetupProps }> = ({ meetup }) => {
-  const { itemIsFavoriteHandle, removeFavoriteHandler, addFavoriteHandler } =
-    useFavoriteContext();
+  const {
+    favoritesMeetup,
+    itemIsFavoriteHandle,
+    addFavoriteHandler,
+    toggleFavoriteAction,
+  } = useFavoriteContext();
   const buttonText = itemIsFavoriteHandle(meetup)
     ? "Remove from favorites"
     : "Add to favorites";
@@ -26,11 +30,7 @@ export const Meetup: FC<{ meetup: MeetupProps }> = ({ meetup }) => {
           {meetup.description}
         </p>
         <button
-          onClick={() =>
-            itemIsFavoriteHandle(meetup)
-              ? removeFavoriteHandler(meetup)
-              : addFavoriteHandler(meetup)
-          }
+          onClick={() => toggleFavoriteAction(meetup)}
           className="inline-flex items-center justify-center px-3 py-2 mt-2 text-sm font-semibold text-white bg-blue-600 border border-transparent rounded-lg gap-x-2 hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
         >
           {buttonText}

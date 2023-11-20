@@ -158,9 +158,9 @@ export default function Navbar() {
               </svg>
               {t("navbar.login")}
             </Link>
-            <button
-              type="button"
+            <Link
               className="relative inline-flex justify-center items-center h-8 w-8 text-sm font-semibold rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+              href="/favorites-meetup"
             >
               <svg
                 className="flex-shrink-0 w-5 h-5"
@@ -177,7 +177,7 @@ export default function Navbar() {
               <span className="absolute top-0 end-0 inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium transform -translate-y-1/2 translate-x-1/2 bg-red-500 text-white">
                 {totalFavorites > 1 ? `${totalFavorites}+` : totalFavorites}
               </span>
-            </button>
+            </Link>
           </div>
         </div>
       </div>

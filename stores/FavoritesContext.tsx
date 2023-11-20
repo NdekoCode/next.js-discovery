@@ -39,6 +39,20 @@ export const FavoritesContextProvider: FC<PropsWithChildren<{}>> = ({
   const [favoritesMeetup, setFavoritesMeetup] = useState<MeetupProps[]>([]);
   const [totalFavorites, setTotalFavorites] = useState(0);
 
+  const addFavoriteHandler = useCallback(
+    (meetup: MeetupProps) => {
+      setFavoritesMeetup([...favoritesMeetup, meetup]);
+    },
+    [favoritesMeetup]
+  );
+  const removeFavoriteHandler = useCallback(
+    (meetup: MeetupProps) => {
+      setFavoritesMeetup((prevState) =>
+        prevState.filter((d) => d.id !== meetup.id)
+      );
+    },
+    [favoritesMeetup]
+  );
   const itemIsFavoriteHandle = useCallback(
     (item: MeetupProps) => {
       return favoritesMeetup.some((d) => d.id === item.id);
@@ -46,37 +60,12 @@ export const FavoritesContextProvider: FC<PropsWithChildren<{}>> = ({
     [favoritesMeetup]
   );
 
-  const addFavoriteHandler = useCallback(
-    (meetup: MeetupProps) => {
-      if (!itemIsFavoriteHandle(meetup)) {
-        setFavoritesMeetup([...favoritesMeetup, meetup]);
-      }
-    },
-    [favoritesMeetup, itemIsFavoriteHandle]
-  );
-  const removeFavoriteHandler = useCallback(
-    (meetup: MeetupProps) => {
-      if (itemIsFavoriteHandle(meetup)) {
-        setFavoritesMeetup((prevState) =>
-          prevState.filter((d) => d.id == meetup.id)
-        );
-      }
-    },
-    [favoritesMeetup, itemIsFavoriteHandle]
-  );
-
   const toggleFavoriteAction = useCallback(
     (meetup: MeetupProps) =>
       itemIsFavoriteHandle(meetup)
         ? removeFavoriteHandler(meetup)
         : addFavoriteHandler(meetup),
-    [
-      favoritesMeetup,
-      itemIsFavoriteHandle,
-      totalFavorites,
-      removeFavoriteHandler,
-      addFavoriteHandler,
-    ]
+    [favoritesMeetup]
   );
   const value = useMemo(
     () => ({
