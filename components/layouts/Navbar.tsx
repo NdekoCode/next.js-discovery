@@ -128,15 +128,27 @@ export default function Navbar() {
               >
                 New Meetup
               </Link>
+              <Link
+                className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                href="/portfolio"
+              >
+                Portfolio
+              </Link>
+
+              <Link
+                className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                href="/portfolio/list"
+              >
+                Portfolio Project
+              </Link>
             </div>
           </div>
           <select
             value={userLanguage}
-            defaultValue={userLanguage}
             onChange={(e) => handleLanguageChange(e.target.value)}
             className="py-3 px-4 max-w-[150px] pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
           >
-            <option selected>Open this select menu</option>
+            <option>Open this select menu</option>
             <option value="en">Anglais</option>
             <option value="fr">Francais</option>
           </select>
