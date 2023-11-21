@@ -11,7 +11,6 @@ export default function About() {
   if (!isMounted) {
     return null;
   }
-  console.log(t);
   return (
     <>
       <Head>
@@ -23,4 +22,3 @@ export default function About() {
     </>
   );
 }
-
