@@ -1,5 +1,6 @@
 import { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { BlogContent } from "../../components";
 import { CounterContextProvider } from "../../context/CounterContext";
 import { Post } from "../../utils/types/types";
@@ -8,6 +9,7 @@ type BlogProps = {
   date: string;
 };
 const Blog: NextPage<BlogProps> = ({ posts, date }) => {
+  console.log(router.query);
   return (
     <CounterContextProvider>
       <Head>

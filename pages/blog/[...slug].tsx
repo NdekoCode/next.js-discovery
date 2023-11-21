@@ -1,6 +1,9 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 export const ArticleAuth = () => {
+  const router = useRouter();
+  console.log(router.query);
   return (
     <>
       <Head>
