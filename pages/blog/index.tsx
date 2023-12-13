@@ -1,14 +1,17 @@
-import { GetStaticProps, NextPage } from "next";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { BlogContent } from "../../components";
-import { CounterContextProvider } from "../../context/CounterContext";
-import { Post } from "../../utils/types/types";
+import { GetStaticProps, NextPage } from 'next';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+
+import { BlogContent } from '../../components';
+import { CounterContextProvider } from '../../context/CounterContext';
+import { Post } from '../../utils/types/types';
+
 type BlogProps = {
   posts: Post[];
   date: string;
 };
 const Blog: NextPage<BlogProps> = ({ posts, date }) => {
+  const router = useRouter();
   console.log(router.query);
   return (
     <CounterContextProvider>
