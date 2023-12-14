@@ -27,7 +27,7 @@ export const generateId = (length: number = 5) => {
     .substring(0, length + 2);
 };
 
-const DUMMY_EVENTS:Event[] = [
+const DUMMY_EVENTS: Event[] = [
   {
     id: "e1",
     title: "Programming for everyone",
@@ -35,7 +35,7 @@ const DUMMY_EVENTS:Event[] = [
       "Everyone can learn to code! Yes, everyone! In this live event, we are going to go through all the key basics and get you started with programming as well.",
     location: "Somestreet 25, 12345 San Somewhereo",
     date: "2021-05-12",
-    image: "images/coding-event.jpg",
+    image: "assets/images/coding-event.jpg",
     isFeatured: false,
   },
   {
@@ -55,7 +55,7 @@ const DUMMY_EVENTS:Event[] = [
       "You probably need no help with networking in general. But focusing your energy correctly - that is something where most people can improve.",
     location: "My Street 12, 10115 Broke City",
     date: "2022-04-10",
-    image: "images/extrovert-event.jpg",
+    image: "assets/images/networking-event.jpg",
     isFeatured: true,
   },
 ];
