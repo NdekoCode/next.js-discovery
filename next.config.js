@@ -4,7 +4,15 @@ const nextConfig = {
   // output: 'export',
   swcMinify: true,
   images: {
-    domains: ["upload.wikimedia.org", "images.unsplash.com"],
+    remotePatterns: [{
+      protocol: 'https',
+      hostname: 'upload.wikimedia.org',
+      port:'',
+    },{
+      protocol: 'https',
+      hostname: 'images.unsplash.com',
+      port:'',
+    }]
   },
 };
 
