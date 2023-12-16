@@ -27,7 +27,7 @@ export const generateId = (length: number = 5) => {
     .substring(0, length + 2);
 };
 
-const DUMMY_EVENTS: Event[] = [
+export const DUMMY_EVENTS: Event[] = [
   {
     id: "e1",
     title: "Programming for everyone",
@@ -45,7 +45,7 @@ const DUMMY_EVENTS: Event[] = [
       "We know: Networking is no fun if you are an introvert person. That's why we came up with this event - it'll be so much easier. Promised!",
     location: "New Wall Street 5, 98765 New Work",
     date: "2021-05-30",
-    image: "images/introvert-event.jpg",
+    image: "assets/images/introvert-event.jpg",
     isFeatured: true,
   },
   {
