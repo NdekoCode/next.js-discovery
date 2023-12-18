@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { FC } from 'react';
 
 import { Event } from '../../utils/types';
+import { Button } from '../ui';
 
 type EventProps = {
     event: Event
@@ -19,29 +20,26 @@ export const EventItem: FC<EventProps> = ({ event }) => {
         <div className="bg-white border shadow-md rounded-xl flex-wrap md:flex-nowrap sm:flex dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
             <div className="flex-shrink-0 relative w-full rounded-t-xl overflow-hidden pt-[40%] sm:rounded-s-xl sm:max-w-[15rem] md:rounded-se-none md:max-w-xs">
                 <img
-                    className="w-full h-full absolute top-0 inset-0 object-cover"
+                    className="absolute inset-0 top-0 object-cover w-full h-full"
                     src={imageLink}
                     alt={event.title}
                 />
             </div>
             <div className="flex flex-wrap">
-                <div className="p-4 flex flex-col h-full sm:p-7">
+                <div className="flex flex-col h-full p-4 gap-y-5 sm:p-7">
                     <h3 className="text-lg font-bold text-gray-800 dark:text-white">
                         {event.title}
                     </h3>
-                    <p className="mt-1 text-gray-500 dark:text-gray-400">
-                        {event.description}
-                    </p>
+                    <time className="text-sm font-bold text-gray-500 dark:text-gray-500">
+                        {humanReadableDate}
+                    </time>
 
-                    <div className="mt-1 text-gray-500 dark:text-gray-400">
+                    <div className="mt-1 italic text-gray-500 dark:text-gray-400">
                         <address>
                             {readableAddress}</address>
                     </div>
-                    <div className="mt-5 sm:mt-auto flex items-center justify-between">
-                        <time className="text-xs text-gray-500 dark:text-gray-500">
-                            {humanReadableDate}
-                        </time>
-                        <Link href={exploreLink}/>
+                    <div className="flex items-center justify-between mt-5 sm:mt-auto">
+                        <Button link={exploreLink} className="underline">Explore event</Button>
                     </div>
                 </div>
             </div>
