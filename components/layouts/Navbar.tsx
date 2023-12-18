@@ -1,8 +1,9 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useTranslation } from "react-i18next";
-import { useLanguage } from "../../hooks/useLanguage";
-import { useFavoriteContext } from "../../stores/FavoritesContext";
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useTranslation } from 'react-i18next';
+
+import { useLanguage } from '../../hooks/useLanguage';
+import { useFavoriteContext } from '../../stores/FavoritesContext';
 
 export default function Navbar() {
   const { t } = useTranslation();
@@ -58,7 +59,7 @@ export default function Navbar() {
       </div>
       <div
         id="navbar-collapse-with-animation"
-        className="hidden w-max transition-all duration-300 hs-collapse basis-full grow sm:block "
+        className="hidden transition-all duration-300 w-max hs-collapse basis-full grow sm:block "
       >
         <div className="flex flex-col mt-5 gap-y-4 gap-x-0 sm:flex-row sm:items-center sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:pl-7 lg:ml-10">
           <Link
@@ -97,11 +98,11 @@ export default function Navbar() {
           <div className="hs-dropdown [--strategy:static] sm:[--strategy:fixed] [--adaptive:none] sm:[--trigger:hover] sm:py-4">
             <button
               type="button"
-              className="flex items-center w-full text-white/[.8] hover:text-white font-medium"
+              className="flex items-center w-full font-medium text-gray-500 hover:text-gray-400 sm:py-6 dark:text-gray-400 dark:hover:text-gray-500"
             >
               Academind
               <svg
-                className="flex-shrink-0 ms-2 w-4 h-4"
+                className="flex-shrink-0 w-4 h-4 ms-2"
                 xmlns="http://www.w3.org/2000/svg"
                 width={24}
                 height={24}
@@ -128,6 +129,13 @@ export default function Navbar() {
               >
                 New Meetup
               </Link>
+
+              <Link
+                className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                href="/events"
+              >
+               Events
+              </Link>
               <Link
                 className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                 href="/portfolio"
@@ -141,6 +149,18 @@ export default function Navbar() {
               >
                 Portfolio Project
               </Link>
+
+              <Link
+                className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                href={{
+                  pathname: "/portfolio/[projectId]",
+                  query: {
+                    projectId: "ndekocode",
+                  },
+                }}
+              >
+                Ndekocode Portfolio Project
+              </Link>
               <Link
                 className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                 href="/clients"
@@ -149,7 +169,12 @@ export default function Navbar() {
               </Link>
               <Link
                 className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                href="/clients/Max"
+                href={{
+                  pathname: "/clients/[clientId]",
+                  query: {
+                    clientId: "Max",
+                  },
+                }}
               >
                 Client Max
               </Link>
@@ -183,7 +208,7 @@ export default function Navbar() {
               {t("navbar.login")}
             </Link>
             <Link
-              className="relative inline-flex justify-center items-center h-8 w-8 text-sm font-semibold rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+              className="relative inline-flex items-center justify-center w-8 h-8 text-sm font-semibold text-gray-800 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
               href="/favorites-meetup"
             >
               <svg

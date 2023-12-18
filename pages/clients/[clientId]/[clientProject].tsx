@@ -1,10 +1,12 @@
-import { NextPage } from "next";
-import Head from "next/head";
-import { useRouter } from "next/router";
+import { NextPage } from 'next';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+
 const MyClientProject: NextPage = () => {
   const router = useRouter();
   const clientId = router.query.clientId;
   const clientProject = router.query.clientProject;
+  console.log(router.query);
   return (
     <>
       <Head>
