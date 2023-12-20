@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-const DataNotFound = () => {
-    return (<div className="min-h-[15rem] flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+import { AlertData } from './ui';
+
+type NoDataProps = {
+    title?: string
+    description?: string;
+}
+const DataNotFound: FC<NoDataProps> = ({title,description}) => {
+    return (<div className="min-h-[15rem] flex flex-col bg-white rounded-xl dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
         <div className="flex flex-col items-center justify-center flex-auto p-4 md:p-5">
             <svg
-                className="w-10 h-10 text-gray-500"
+                className="w-10 h-10 text-gray-500 mb-3"
                 xmlns="http://www.w3.org/2000/svg"
                 width={24}
                 height={24}
@@ -20,9 +26,7 @@ const DataNotFound = () => {
                 <line x1={6} x2="6.01" y1={16} y2={16} />
                 <line x1={10} x2="10.01" y1={16} y2={16} />
             </svg>
-            <p className="mt-5 text-sm text-gray-800 dark:text-gray-300">
-                No data to show
-            </p>
+            <AlertData title={`No data to show ${title ?":"+title:''}`} description={description} />
         </div>
     </div>
 
