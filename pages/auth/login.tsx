@@ -1,6 +1,7 @@
-import Link from "next/link";
-import { FC } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import Link from 'next/link';
+import { FC } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+
 type FormType = {
   email: string;
   password: string;

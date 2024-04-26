@@ -36,6 +36,7 @@ export async function getStaticProps() {
     JSON.parse(file) || [];
   return {
     props: { products:data.products },
+    revalidate:180
   };
 }
 export default ProductPage;
