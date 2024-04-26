@@ -1,18 +1,56 @@
+import 'react-datepicker/dist/react-datepicker.css';
+
 import Link from 'next/link';
 import { FC } from 'react';
-import { useForm } from 'react-hook-form';
+import DatePicker from 'react-datepicker';
+import { Controller, useForm } from 'react-hook-form';
+import { z } from 'zod';
+
+import { zodResolver } from '@hookform/resolvers/zod';
 
 type FormType = {
   username: string;
   email: string;
   password: string;
   rememberMe: string;
+  birthday?: string;
+};
+const wait = (duration = 1000) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, duration);
+  });
 };
 const SignIn: FC = () => {
-  const { register, handleSubmit, formState } = useForm<FormType>();
+  const formSchema = z.object({
+    email: z
+      .string({
+        required_error: "Add an email address so we can get back to you",
+        message: "Add an email address so we can get back to you",
+      })
+      .email({
+        message: "Add a email address",
+      })
+      .max(255, "Your email is too long"),
+    password: z
+      .string({ required_error: "Password is required" })
+      .min(8, "Minimum 8 character for password"),
+    username: z
+      .string({ required_error: "Username is required" })
+      .min(2, "Username must be longer than 3 characters")
+      .max(255, "Your username is too big"),
+    birthday: z.date(),
+    rememberMe: z.boolean(),
+  });
+  type FormSchemaType = z.infer<typeof formSchema>;
+  const { register, handleSubmit, formState, control } =
+    useForm<FormSchemaType>({
+      mode: "onTouched",
+      resolver: zodResolver(formSchema),
+    });
   const errors = formState.errors;
 
-  const submitForm = (data: any) => {
+  const submitForm = async (data: any) => {
+    await wait(2000);
     console.log(data);
   };
   return (
@@ -51,7 +89,7 @@ const SignIn: FC = () => {
                       id="username"
                       className="block w-full px-4 py-3 text-sm border border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                       aria-describedby="username-error"
-                      {...register("username", { required: true })}
+                      {...register("username")}
                     />
                     {errors.username ? (
                       <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -68,9 +106,9 @@ const SignIn: FC = () => {
                       </div>
                     ) : null}
                   </div>
-                  {errors?.username?.type === "required" ? (
+                  {errors?.username?.message ? (
                     <p className="mt-2 text-xs text-red-600" id="email-error">
-                      Please include a valid username
+                      {errors?.username.message}
                     </p>
                   ) : null}
                 </div>
@@ -89,13 +127,9 @@ const SignIn: FC = () => {
                       id="email"
                       className="block w-full px-4 py-3 text-sm border border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                       aria-describedby="email-error"
-                      {...register("email", {
-                        required: true,
-                        maxLength: 255,
-                        pattern: /^\S+@\S+\.\S+$/,
-                      })}
+                      {...register("email")}
                     />
-                    {errors.email ? (
+                    {errors.email?.message ? (
                       <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                         <svg
                           className="w-5 h-5 text-red-500"
@@ -110,24 +144,9 @@ const SignIn: FC = () => {
                       </div>
                     ) : null}
                   </div>
-                  {errors.email?.type === "pattern" ? (
+                  {errors.email?.message ? (
                     <p className="mt-2 text-xs text-red-600" id="email-error">
-                      Please include a valid email address so we can get back to
-                      you
-                    </p>
-                  ) : null}
-                  {errors.email?.type === "required" ? (
-                    <p className="mt-2 text-xs text-red-600" id="email-error">
-                      Add an email address so we can get back to you
-                    </p>
-                  ) : null}
-
-                  {errors.email?.type === "maxLength" ? (
-                    <p
-                      className="hidden mt-2 text-xs text-red-600"
-                      id="email-error"
-                    >
-                      Your email address is so big, reduce it please
+                      {errors.email?.message}
                     </p>
                   ) : null}
                 </div>
@@ -154,10 +173,7 @@ const SignIn: FC = () => {
                       id="password"
                       className="block w-full px-4 py-3 text-sm border border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                       aria-describedby="password-error"
-                      {...register("password", {
-                        required: true,
-                        minLength: 8,
-                      })}
+                      {...register("password")}
                     />
                     {errors.password ? (
                       <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -175,22 +191,46 @@ const SignIn: FC = () => {
                     ) : null}
                   </div>
 
-                  {errors.password?.type === "required" ? (
+                  {errors.password ? (
                     <p
                       className="mt-2 text-xs text-red-600"
                       id="password-error"
                     >
-                      Password required
+                      {errors.password.message}
                     </p>
                   ) : null}
-                  {errors.password?.type === "minLength" ? (
-                    <p
-                      className="mt-2 text-xs text-red-600"
-                      id="password-error"
+                </div>
+                {/* End Form Group */}
+
+                {/* Form Group */}
+                <div>
+                  <div className="flex items-center justify-between">
+                    <label
+                      htmlFor="password"
+                      className="block mb-2 text-sm dark:text-white"
                     >
-                      8+ characters required
-                    </p>
-                  ) : null}
+                      Password
+                    </label>
+                    <Link
+                      className="text-sm font-medium text-blue-600 decoration-2 hover:underline"
+                      href="/forget-password"
+                    >
+                      Forgot password?
+                    </Link>
+                  </div>
+                  <div className="relative">
+                    <Controller
+                      control={control}
+                      {...register("birthday", { required: true })}
+                      render={({ field: { onChange, onBlur, value } }) => (
+                        <DatePicker
+                          onChange={onChange}
+                          onBlur={onBlur}
+                          selected={value}
+                        />
+                      )}
+                    />
+                  </div>
                 </div>
                 {/* End Form Group */}
                 {/* Checkbox */}
@@ -214,10 +254,17 @@ const SignIn: FC = () => {
                 </div>
                 {/* End Checkbox */}
                 <button
-                  disabled={formState.isValid}
+                  disabled={!formState.isValid || formState.isSubmitting}
                   type="submit"
-                  className="inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white transition-all bg-blue-500 border border-transparent rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25 disabled:cursor-not-allowed"
+                  className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white transition-all bg-blue-500 border border-transparent rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25 disabled:cursor-not-allowed"
                 >
+                  {formState.isSubmitting ? (
+                    <span
+                      className="animate-spin inline-flex flex-none w-4 h-4 border-[3px] border-current border-t-transparent text-white rounded-full"
+                      role="status"
+                      aria-label="loading"
+                    ></span>
+                  ) : null}
                   Sign in
                 </button>
               </div>
