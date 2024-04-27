@@ -8,13 +8,6 @@ import { z } from 'zod';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-type FormType = {
-  username: string;
-  email: string;
-  password: string;
-  rememberMe: string;
-  birthday?: string;
-};
 const wait = (duration = 1000) => {
   return new Promise((resolve) => {
     setTimeout(resolve, duration);
