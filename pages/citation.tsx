@@ -17,7 +17,10 @@ const citation: FC<{ citations: Quote[] }> = (props) => {
       </Head>
       <div className="flex items-center justify-center mt-10">
         {citations.map((citation, index) => (
-          <div key={index} className="flex flex-col items-center justify-center h-56 gap-5 p-5 text-white bg-blue-500 rounded-3xl w-96">
+          <div
+            key={index}
+            className="flex flex-col items-center justify-center h-56 gap-5 p-5 text-white bg-blue-500 rounded-3xl w-96"
+          >
             <p className="text-base text-centr">{citation.quote}</p>
             <p className="text-base text-centr">{citation.author}</p>
           </div>
@@ -44,11 +47,16 @@ export const getStaticProps = async () => {
       },
     })
   ).json();
+  if (citations.length === 0) {
+    return {
+      notFound: true,
+    };
+  }
   return {
     props: {
       citations,
     },
-    revalidate:20
+    revalidate: 20,
   };
 };
 export default citation;

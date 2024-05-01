@@ -1,5 +1,5 @@
-import Head from "next/head";
-import { FC } from "react";
+import Head from 'next/head';
+import { FC } from 'react';
 
 type LangKey = "fr" | "en";
 const EnglishLearning: FC<{
@@ -57,6 +57,11 @@ const EnglishLearning: FC<{
 };
 export const getStaticProps = async () => {
   const data = await import("../utils/data/vocabulary.json");
+  if(!data.vocabulary.length){
+    return {
+      notFound: true
+    }
+  }
   console.log(data.vocabulary);
   return {
     props: {
