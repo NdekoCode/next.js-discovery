@@ -1,3 +1,4 @@
+import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import { FC } from 'react';
 
@@ -13,7 +14,7 @@ const EnglishLearning: FC<{
       <Head>
         <title>Learn English</title>
       </Head>
-      <div className='container'>
+      <div className="container">
         {data ? (
           <div className="flex flex-col">
             <div className="-m-1.5 overflow-x-auto">
@@ -58,11 +59,7 @@ const EnglishLearning: FC<{
     </>
   );
 };
-export const getStaticProps = async ({
-  params,
-}: {
-  params: { category: string };
-}) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const data = (await import("../../utils/data/english.json")) as unknown as {
     englishList: IEnglish[];
   };
@@ -74,7 +71,7 @@ export const getStaticProps = async ({
   const item =
     data.englishList.find((item) => {
       const itemObject = Object.keys(item)[0];
-      if (itemObject === params.category) {
+      if (itemObject === context?.params?.category) {
         return itemObject;
       }
     }) || null;
@@ -85,8 +82,8 @@ export const getStaticProps = async ({
   }
   return {
     props: {
-      data: item[params.category as string],
-      category: params.category,
+      data: item[context?.params?.category as string],
+      category: context?.params?.category,
     },
   };
 };
