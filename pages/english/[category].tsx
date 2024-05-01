@@ -57,10 +57,10 @@ const EnglishLearning: FC<{
 };
 export const getStaticProps = async () => {
   const data = await import("../utils/data/vocabulary.json");
-  if(!data.vocabulary.length){
+  if (!data.vocabulary.length) {
     return {
-      notFound: true
-    }
+      notFound: true,
+    };
   }
   console.log(data.vocabulary);
   return {

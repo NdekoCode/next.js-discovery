@@ -1,4 +1,4 @@
-import { GetStaticProps, GetStaticPropsContext } from 'next';
+import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
 import { NextRouter, useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -29,11 +29,18 @@ export default function Read({ post }: ReadProps) {
   );
 }
 
-export const getStaticProps: GetStaticProps<ReadProps> = async (
+export const getStaticProps = async (
   context: GetStaticPropsContext
 ) => {
   console.log(context);
   const { params } = context;
+  if (!params?.slug) {
+    return {
+      redirect: {
+        destination: "/",
+      },
+    };
+  }
   const post = await fetch(
     `https://jsonplaceholder.typicode.com/posts/${params?.slug}`
   ).then((res) => res.json());
