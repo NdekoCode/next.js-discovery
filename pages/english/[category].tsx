@@ -13,7 +13,7 @@ const EnglishLearning: FC<{
       <Head>
         <title>Learn English</title>
       </Head>
-      <div>
+      <div className='container'>
         {data ? (
           <div className="flex flex-col">
             <div className="-m-1.5 overflow-x-auto">
