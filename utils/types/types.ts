@@ -31,3 +31,10 @@ export type Event = {
   image: string;
   isFeatured: boolean;
 };
+
+export type IEnglish =  {
+  [key:string]:{
+    en: string;
+    fr: string;
+  }
+}

@@ -1,17 +1,20 @@
 import Head from 'next/head';
 import { FC } from 'react';
 
+import { IEnglish } from '../../utils/types';
+
 type LangKey = "fr" | "en";
 const EnglishLearning: FC<{
-  vocabularies: { [key in LangKey]: string }[];
-}> = ({ vocabularies }) => {
+  data: { [key in LangKey]: string }[];
+  category: string;
+}> = ({ data }) => {
   return (
     <>
       <Head>
         <title>Learn English</title>
       </Head>
       <div>
-        {vocabularies ? (
+        {data ? (
           <div className="flex flex-col">
             <div className="-m-1.5 overflow-x-auto">
               <div className="p-1.5 min-w-full inline-block align-middle">
@@ -34,13 +37,13 @@ const EnglishLearning: FC<{
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200 dark:divide-neutral-700">
-                      {vocabularies.map((vocabulary, index) => (
+                      {data.map((item, index) => (
                         <tr key={index}>
                           <td className="px-6 py-4 text-sm font-medium text-gray-800 capitalize whitespace-nowrap dark:text-neutral-200">
-                            {vocabulary.en}
+                            {item.en}
                           </td>
                           <td className="px-6 py-4 text-sm text-gray-800 capitalize whitespace-nowrap dark:text-neutral-200">
-                            {vocabulary.fr}
+                            {item.fr}
                           </td>
                         </tr>
                       ))}
@@ -55,19 +58,52 @@ const EnglishLearning: FC<{
     </>
   );
 };
-export const getStaticProps = async () => {
-  const data = await import("../utils/data/vocabulary.json");
-  if (!data.vocabulary.length) {
+export const getStaticProps = async ({
+  params,
+}: {
+  params: { category: string };
+}) => {
+  const data = (await import("../../utils/data/english.json")) as unknown as {
+    englishList: IEnglish[];
+  };
+  if (!data.englishList.length) {
     return {
       notFound: true,
     };
   }
-  console.log(data.vocabulary);
+  const item =
+    data.englishList.find((item) => {
+      const itemObject = Object.keys(item)[0];
+      if (itemObject === params.category) {
+        return itemObject;
+      }
+    }) || null;
+  if (!item) {
+    return {
+      notFound: true,
+    };
+  }
   return {
     props: {
-      vocabularies: data.vocabulary,
+      data: item[params.category as string],
+      category: params.category,
     },
   };
 };
 
+export const getStaticPaths = async () => {
+  const data = await import("../../utils/data/english.json");
+  const paths = data.englishList.map((item, index) => {
+    const category = Object.keys(item)[0];
+    return {
+      params: {
+        category,
+      },
+    };
+  });
+  return {
+    paths,
+    fallback: false,
+  };
+};
 export default EnglishLearning;
