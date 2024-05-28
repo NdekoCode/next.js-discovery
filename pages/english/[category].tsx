@@ -60,7 +60,9 @@ const EnglishLearning: FC<{
   );
 };
 export const getStaticProps: GetStaticProps = async (context) => {
-  const data = (await import("../../utils/data/english.json")) as unknown as {
+  const data = (await (
+    await fetch("http://localhost:3000/api/english")
+  ).json()) as unknown as {
     englishList: IEnglish[];
   };
   if (!data.englishList.length) {
@@ -77,7 +79,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
     }) || null;
   if (!item) {
     return {
+      // Not found est utiliser quand rien n'est trouver pour renvoyer à la page d'erreur 404, cette proprieter est utilisable uniquement sur `getStaticProps`
       notFound: true,
+      /**
+       * Par contre on pourrai bien le remplacer par ceci pour dire, si tu ne trouve rien, redirige l'utilisateur sur la page d'acceuil
+      redirect:{
+        destination:"/"
+      }
+       */
     };
   }
   return {
@@ -85,11 +94,16 @@ export const getStaticProps: GetStaticProps = async (context) => {
       data: item[context?.params?.category as string],
       category: context?.params?.category,
     },
+    // revalidate: 20000: Utiliser pour faire du Incremental Static Generation
   };
 };
 
 export const getStaticPaths = async () => {
-  const data = await import("../../utils/data/english.json");
+  const data = (await (
+    await fetch("http://localhost:3000/api/english")
+  ).json()) as unknown as {
+    englishList: IEnglish[];
+  };
   const paths = data.englishList.map((item, index) => {
     const category = Object.keys(item)[0];
     return {
@@ -100,7 +114,7 @@ export const getStaticPaths = async () => {
   });
   return {
     paths,
-    fallback: false,
+    fallback: false, // Ceci si c'est "false" cela veut dire si je tombe sur un chemin qui n'existe pas alors renvois l'erreur 404
   };
 };
 export default EnglishLearning;

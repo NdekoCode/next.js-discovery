@@ -2,8 +2,9 @@ import { FC } from 'react';
 
 import { IEnglish } from '../../utils/types';
 
-export const getStaticProps = async () => {
-  const data = await import("../../utils/data/english.json");
+export const getStaticProps = async () => { const data =await (await fetch('http://localhost:3000/api/english')).json() as unknown as {
+  englishList: IEnglish[];
+};
   const englishList = data.englishList;
   if (!englishList.length) return { notFound: true };
   return {
