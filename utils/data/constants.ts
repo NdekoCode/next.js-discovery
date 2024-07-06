@@ -87,4 +87,4 @@ export function getFilteredEvents(dateFilter: {
 export function getEventById(id: string): Event {
   return DUMMY_EVENTS.find((event) => event.id === id)!;
 }
-export const BASE_URL = process.env.NEXT_BASE_URL;
+export const BASE_URL = process.env.NEXT_BASE_URL || "";
