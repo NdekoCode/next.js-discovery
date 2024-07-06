@@ -5,6 +5,8 @@ import { z } from 'zod';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import { BASE_URL } from '../../utils/data/constants';
+
 const formSchema = z.object({
   frenchWord: z
     .string({
@@ -33,7 +35,7 @@ const addWord: FC = () => {
       fr: data.frenchWord,
     };
     const apiData = await (
-      await fetch("http://localhost:3000/api/addword", {
+      await fetch(BASE_URL+"/api/addword", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -43,7 +45,7 @@ const addWord: FC = () => {
       })
     ).json();
     if (apiData) {
-      router.push("/english/randomword");
+      router.push(BASE_URL+"/english/randomword");
     }
     console.log(formData, apiData);
   };

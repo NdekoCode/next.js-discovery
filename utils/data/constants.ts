@@ -68,7 +68,10 @@ export function getAllEvents() {
   return DUMMY_EVENTS;
 }
 
-export function getFilteredEvents(dateFilter:{year:number,month:number}):Event[] {
+export function getFilteredEvents(dateFilter: {
+  year: number;
+  month: number;
+}): Event[] {
   const { year, month } = dateFilter;
 
   let filteredEvents = DUMMY_EVENTS.filter((event) => {
@@ -81,6 +84,7 @@ export function getFilteredEvents(dateFilter:{year:number,month:number}):Event[]
   return filteredEvents;
 }
 
-export function getEventById(id:string):Event {
+export function getEventById(id: string): Event {
   return DUMMY_EVENTS.find((event) => event.id === id)!;
 }
+export const BASE_URL = process.env.NEXT_BASE_URL;

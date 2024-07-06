@@ -2,12 +2,13 @@ import { GetStaticProps } from 'next';
 import Link from 'next/link';
 import { FC, useState } from 'react';
 
+import { BASE_URL } from '../../utils/data/constants';
 import { ITranslation } from '../../utils/types';
 
 export const getStaticProps: GetStaticProps<{
   englishWord: ITranslation;
 }> = async (context) => {
-  const data = await (await fetch("http://localhost:3000/api/vocapi")).json();
+  const data = await (await fetch(BASE_URL+"/api/vocapi")).json();
   return {
     props: {
       englishWord: data,
@@ -21,7 +22,7 @@ const RandomWord: FC<{ englishWord: ITranslation }> = ({ englishWord }) => {
   const handleGenerated = () => {
     (async () => {
       const word = (await (
-        await fetch("http://localhost:3000/api/vocapi")
+        await fetch(BASE_URL+"/api/vocapi")
       ).json()) as ITranslation;
       if (word) {
         setGenerateWord(word);

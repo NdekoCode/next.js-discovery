@@ -2,6 +2,7 @@ import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import { FC } from 'react';
 
+import { BASE_URL } from '../../utils/data/constants';
 import { IEnglish } from '../../utils/types';
 
 type LangKey = "fr" | "en";
@@ -61,7 +62,7 @@ const EnglishLearning: FC<{
 };
 export const getStaticProps: GetStaticProps = async (context) => {
   const data = ((await (
-    await fetch("http://localhost:3000/api/english")
+    await fetch(BASE_URL+"/api/english")
   ).json()) as unknown) as {
     englishList: IEnglish[];
   };
@@ -100,7 +101,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 export const getStaticPaths = async () => {
   const data = ((await (
-    await fetch("http://localhost:3000/api/english")
+    await fetch(BASE_URL+"/api/english")
   ).json()) as unknown) as {
     englishList: IEnglish[];
   };
