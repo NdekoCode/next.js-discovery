@@ -5,22 +5,22 @@ import { z } from 'zod';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
+const formSchema = z.object({
+  email: z
+    .string({
+      required_error: "The email is required",
+      message: "The email must be a string",
+    })
+    .email({ message: "The email is invalid" })
+    .max(255, "Your email is too big"),
+  password: z
+    .string({
+      required_error: "The password is required",
+      message: "The password must be a string",
+    })
+    .min(8, "At least 8 character for the password"),
+});
 const Login: FC = () => {
-  const formSchema = z.object({
-    email: z
-      .string({
-        required_error: "The email is required",
-        message: "The email must be a string",
-      })
-      .email({ message: "The email is invalid" })
-      .max(255, "Your email is too big"),
-    password: z
-      .string({
-        required_error: "The password is required",
-        message: "The password must be a string",
-      })
-      .min(8, "At least 8 character for the password"),
-  });
   type FormType = z.infer<typeof formSchema>;
   const { register, handleSubmit, formState } = useForm<FormType>({
     resolver: zodResolver(formSchema),

@@ -35,11 +35,12 @@ const SignIn: FC = () => {
     rememberMe: z.boolean(),
   });
   type FormSchemaType = z.infer<typeof formSchema>;
-  const { register, handleSubmit, formState, control } =
-    useForm<FormSchemaType>({
-      mode: "onTouched",
-      resolver: zodResolver(formSchema),
-    });
+  const { register, handleSubmit, formState, control } = useForm<
+    FormSchemaType
+  >({
+    mode: "onTouched",
+    resolver: zodResolver(formSchema),
+  });
   const errors = formState.errors;
 
   const submitForm = async (data: any) => {
@@ -84,26 +85,28 @@ const SignIn: FC = () => {
                       aria-describedby="username-error"
                       {...register("username")}
                     />
-                    {errors.username ? (
-                      <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                        <svg
-                          className="w-5 h-5 text-red-500"
-                          width={16}
-                          height={16}
-                          fill="currentColor"
-                          viewBox="0 0 16 16"
-                          aria-hidden="true"
-                        >
-                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                        </svg>
-                      </div>
-                    ) : null}
+                    {errors &&
+                      (errors.username ? (
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                          <svg
+                            className="w-5 h-5 text-red-500"
+                            width={16}
+                            height={16}
+                            fill="currentColor"
+                            viewBox="0 0 16 16"
+                            aria-hidden="true"
+                          >
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                          </svg>
+                        </div>
+                      ) : null)}
                   </div>
-                  {errors?.username?.message ? (
-                    <p className="mt-2 text-xs text-red-600" id="email-error">
-                      {errors?.username.message}
-                    </p>
-                  ) : null}
+                  {errors &&
+                    (errors?.username?.message ? (
+                      <p className="mt-2 text-xs text-red-600" id="email-error">
+                        {errors?.username.message}
+                      </p>
+                    ) : null)}
                 </div>
                 {/* End Form Group */}
                 {/* Form Group */}
@@ -122,26 +125,29 @@ const SignIn: FC = () => {
                       aria-describedby="email-error"
                       {...register("email")}
                     />
-                    {errors.email?.message ? (
-                      <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                        <svg
-                          className="w-5 h-5 text-red-500"
-                          width={16}
-                          height={16}
-                          fill="currentColor"
-                          viewBox="0 0 16 16"
-                          aria-hidden="true"
-                        >
-                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                        </svg>
-                      </div>
-                    ) : null}
+                    {errors &&
+                      errors.email &&
+                      (errors.email.message ? (
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                          <svg
+                            className="w-5 h-5 text-red-500"
+                            width={16}
+                            height={16}
+                            fill="currentColor"
+                            viewBox="0 0 16 16"
+                            aria-hidden="true"
+                          >
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                          </svg>
+                        </div>
+                      ) : null)}
                   </div>
-                  {errors.email?.message ? (
-                    <p className="mt-2 text-xs text-red-600" id="email-error">
-                      {errors.email?.message}
-                    </p>
-                  ) : null}
+                  {errors &&
+                    (errors.email?.message ? (
+                      <p className="mt-2 text-xs text-red-600" id="email-error">
+                        {errors.email?.message}
+                      </p>
+                    ) : null)}
                 </div>
                 {/* End Form Group */}
                 {/* Form Group */}
@@ -168,30 +174,31 @@ const SignIn: FC = () => {
                       aria-describedby="password-error"
                       {...register("password")}
                     />
-                    {errors.password ? (
-                      <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                        <svg
-                          className="w-5 h-5 text-red-500"
-                          width={16}
-                          height={16}
-                          fill="currentColor"
-                          viewBox="0 0 16 16"
-                          aria-hidden="true"
-                        >
-                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                        </svg>
-                      </div>
-                    ) : null}
+                    {errors &&
+                      (errors.password ? (
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                          <svg
+                            className="w-5 h-5 text-red-500"
+                            width={16}
+                            height={16}
+                            fill="currentColor"
+                            viewBox="0 0 16 16"
+                            aria-hidden="true"
+                          >
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                          </svg>
+                        </div>
+                      ) : null)}
                   </div>
-
-                  {errors.password ? (
-                    <p
-                      className="mt-2 text-xs text-red-600"
-                      id="password-error"
-                    >
-                      {errors.password.message}
-                    </p>
-                  ) : null}
+                  {errors &&
+                    (errors.password ? (
+                      <p
+                        className="mt-2 text-xs text-red-600"
+                        id="password-error"
+                      >
+                        {errors.password.message}
+                      </p>
+                    ) : null)}
                 </div>
                 {/* End Form Group */}
 
