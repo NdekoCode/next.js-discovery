@@ -60,9 +60,9 @@ const EnglishLearning: FC<{
   );
 };
 export const getStaticProps: GetStaticProps = async (context) => {
-  const data = (await (
+  const data = ((await (
     await fetch("http://localhost:3000/api/english")
-  ).json()) as unknown as {
+  ).json()) as unknown) as {
     englishList: IEnglish[];
   };
   if (!data.englishList.length) {
@@ -94,14 +94,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
       data: item[context?.params?.category as string],
       category: context?.params?.category,
     },
-    // revalidate: 20000: Utiliser pour faire du Incremental Static Generation
+    // revalidate: 20000: Utiliser pour faire du Incremental Static Generation (Uniquement utilisable sur getStaticProps ou dans la fonction "fetch")
   };
 };
 
 export const getStaticPaths = async () => {
-  const data = (await (
+  const data = ((await (
     await fetch("http://localhost:3000/api/english")
-  ).json()) as unknown as {
+  ).json()) as unknown) as {
     englishList: IEnglish[];
   };
   const paths = data.englishList.map((item, index) => {

@@ -21,7 +21,6 @@ export type metaDataType = {
   description: string;
 };
 
-
 export type Event = {
   id: string;
   title: string;
@@ -31,10 +30,10 @@ export type Event = {
   image: string;
   isFeatured: boolean;
 };
-
-export type IEnglish =  {
-  [key:string]:{
-    en: string;
-    fr: string;
-  }
+export interface ITranslation {
+  en: string;
+  fr: string;
 }
+export type IEnglish = {
+  [key: string]: ITranslation;
+};

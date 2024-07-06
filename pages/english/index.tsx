@@ -2,9 +2,12 @@ import { FC } from 'react';
 
 import { IEnglish } from '../../utils/types';
 
-export const getStaticProps = async () => { const data =await (await fetch('http://localhost:3000/api/english')).json() as unknown as {
-  englishList: IEnglish[];
-};
+export const getStaticProps = async () => {
+  const data = ((await (
+    await fetch("http://localhost:3000/api/english")
+  ).json()) as unknown) as {
+    englishList: IEnglish[];
+  };
   const englishList = data.englishList;
   if (!englishList.length) return { notFound: true };
   return {
@@ -18,11 +21,10 @@ const index: FC<{ englishList: IEnglish[] }> = ({ englishList }) => {
     return Object.keys(item)[0];
   });
   return englishDataKeys.length ? (
-    <div className='container mt-10'>
+    <div className="container mt-10">
       <ul className="flex flex-col max-w-xs gap-3">
         {englishDataKeys.map((item, index) => (
-          <li 
-          key={index}>
+          <li key={index}>
             <a
               className="inline-flex items-center gap-x-3.5 py-3 px-4 text-sm font-medium border border-gray-200 text-blue-600 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:border-neutral-700"
               href={`/english/${item}`}
