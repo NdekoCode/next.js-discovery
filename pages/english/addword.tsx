@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -6,29 +6,46 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const formSchema = z.object({
-  email: z
+  frenchWord: z
     .string({
-      required_error: "The email is required",
-      message: "The email must be a string",
+      required_error: "The word is required",
+      message: "The word must be a string",
     })
-    .email({ message: "The email is invalid" })
-    .max(255, "Your email is too big"),
-  password: z
+    .max(255, "Your word is too big"),
+  englishWord: z
     .string({
-      required_error: "The password is required",
-      message: "The password must be a string",
+      required_error: "The word is required",
+      message: "The word must be a string",
     })
-    .min(8, "At least 8 character for the password"),
+    .max(255, "Your word is too big"),
 });
-const Login: FC = () => {
+const addWord: FC = () => {
   type FormType = z.infer<typeof formSchema>;
   const { register, handleSubmit, formState } = useForm<FormType>({
     resolver: zodResolver(formSchema),
     mode: "onTouched",
   });
+  const router = useRouter();
   const { errors, isSubmitting, isValid } = formState;
-  const loginFormHandler: SubmitHandler<FormType> = (data) => {
-    console.log(data);
+  const addWordFormHandler: SubmitHandler<FormType> = async (data) => {
+    const formData = {
+      en: data.englishWord,
+      fr: data.frenchWord,
+    };
+    const apiData = await (
+      await fetch("http://localhost:3000/api/addword", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+    ).json();
+    if (apiData) {
+      router.push("/english/randomword");
+    }
+    console.log(formData, apiData);
   };
   return (
     <>
@@ -37,39 +54,30 @@ const Login: FC = () => {
           <div className="p-4 sm:p-7">
             <div className="text-center">
               <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">
-                Se connecter
+                Add a new word
               </h1>
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                Vous n'avez pas de compte ?
-                <Link
-                  className="font-medium text-blue-600 decoration-2 hover:underline"
-                  href="/register"
-                >
-                  Créez-en-un
-                </Link>
-              </p>
             </div>
             <div className="mt-5">
               {/* Form */}
-              <form onSubmit={handleSubmit(loginFormHandler)} method="POST">
+              <form onSubmit={handleSubmit(addWordFormHandler)} method="POST">
                 <div className="grid gap-y-4">
                   {/* Form Group */}
                   <div>
                     <label
-                      htmlFor="email"
+                      htmlFor="french"
                       className="block mb-2 text-sm dark:text-white"
                     >
-                      Email address
+                      French Word
                     </label>
                     <div className="relative">
                       <input
-                        type="email"
-                        id="email"
+                        type="text"
+                        id="french"
                         className="block w-full px-4 py-3 text-sm border border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
-                        aria-describedby="email-error"
-                        {...register("email")}
+                        aria-describedby="word-error"
+                        {...register("frenchWord")}
                       />
-                      {errors.email ? (
+                      {errors.frenchWord ? (
                         <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                           <svg
                             className="w-5 h-5 text-red-500"
@@ -84,39 +92,30 @@ const Login: FC = () => {
                         </div>
                       ) : null}
                     </div>{" "}
-                    {errors.email?.message ? (
-                      <p className="mt-2 text-xs text-red-600" id="email-error">
-                        Please include a valid email address so we can get back
-                        to you
+                    {errors.frenchWord?.message ? (
+                      <p className="mt-2 text-xs text-red-600" id="word-error">
+                        Please include a valid word
                       </p>
                     ) : null}
                   </div>
                   {/* End Form Group */}
                   {/* Form Group */}
                   <div>
-                    <div className="flex items-center justify-between">
-                      <label
-                        htmlFor="password"
-                        className="block mb-2 text-sm dark:text-white"
-                      >
-                        Password
-                      </label>
-                      <Link
-                        className="text-sm font-medium text-blue-600 decoration-2 hover:underline"
-                        href="/forget-password"
-                      >
-                        Forgot password?
-                      </Link>
-                    </div>
+                    <label
+                      htmlFor="english"
+                      className="block mb-2 text-sm dark:text-white"
+                    >
+                      English Word
+                    </label>
                     <div className="relative">
                       <input
-                        type="password"
-                        id="password"
+                        type="text"
+                        id="english"
                         className="block w-full px-4 py-3 text-sm border border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
-                        aria-describedby="password-error"
-                        {...register("password")}
+                        aria-describedby="word-error"
+                        {...register("englishWord")}
                       />
-                      {errors.email ? (
+                      {errors.englishWord ? (
                         <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                           <svg
                             className="w-5 h-5 text-red-500"
@@ -130,43 +129,27 @@ const Login: FC = () => {
                           </svg>
                         </div>
                       ) : null}
-                    </div>
-                    {errors.password?.message ? (
-                      <p
-                        className="mt-2 text-xs text-red-600"
-                        id="password-error"
-                      >
-                        8+ characters required
+                    </div>{" "}
+                    {errors.englishWord?.message ? (
+                      <p className="mt-2 text-xs text-red-600" id="word-error">
+                        Please include a valid word
                       </p>
                     ) : null}
                   </div>
                   {/* End Form Group */}
-                  {/* Checkbox */}
-                  <div className="flex items-center">
-                    <div className="flex">
-                      <input
-                        id="remember-me"
-                        name="remember-me"
-                        type="checkbox"
-                        className="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                      />
-                    </div>
-                    <div className="ml-3">
-                      <label
-                        htmlFor="remember-me"
-                        className="text-sm dark:text-white"
-                      >
-                        Remember me
-                      </label>
-                    </div>
-                  </div>
-                  {/* End Checkbox */}
                   <button
                     type="submit"
                     disabled={!(isValid || isSubmitting)}
                     className="inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white transition-all bg-blue-500 border border-transparent rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25 disabled:cursor-not-allowed"
                   >
-                    Sign in
+                    {isSubmitting && (
+                      <span
+                        className="animate-spin inline-block size-4 border-[3px] border-current border-t-transparent text-white rounded-full"
+                        role="status"
+                        aria-label="loading"
+                      ></span>
+                    )}
+                    Add word
                   </button>
                 </div>
               </form>
@@ -178,4 +161,4 @@ const Login: FC = () => {
     </>
   );
 };
-export default Login;
+export default addWord;
