@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -5,18 +6,18 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const formSchema = z.object({
-  word: z
+  frenchWord: z
     .string({
       required_error: "The word is required",
       message: "The word must be a string",
     })
     .max(255, "Your word is too big"),
-  language: z
+  englishWord: z
     .string({
-      required_error: "The language is required",
-      message: "The language must be a string",
+      required_error: "The word is required",
+      message: "The word must be a string",
     })
-    .max(3, "Your word is too big"),
+    .max(255, "Your word is too big"),
 });
 const addWord: FC = () => {
   type FormType = z.infer<typeof formSchema>;
@@ -24,9 +25,27 @@ const addWord: FC = () => {
     resolver: zodResolver(formSchema),
     mode: "onTouched",
   });
+  const router = useRouter();
   const { errors, isSubmitting, isValid } = formState;
-  const addWordFormHandler: SubmitHandler<FormType> = (data) => {
-    console.log(data);
+  const addWordFormHandler: SubmitHandler<FormType> = async (data) => {
+    const formData = {
+      en: data.englishWord,
+      fr: data.frenchWord,
+    };
+    const apiData = await (
+      await fetch("http://localhost:3000/api/addword", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+    ).json();
+    if (apiData) {
+      router.push("/english/randomword");
+    }
+    console.log(formData, apiData);
   };
   return (
     <>
@@ -45,20 +64,20 @@ const addWord: FC = () => {
                   {/* Form Group */}
                   <div>
                     <label
-                      htmlFor="word"
+                      htmlFor="french"
                       className="block mb-2 text-sm dark:text-white"
                     >
-                      Word
+                      French Word
                     </label>
                     <div className="relative">
                       <input
                         type="text"
-                        id="email"
+                        id="french"
                         className="block w-full px-4 py-3 text-sm border border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                         aria-describedby="word-error"
-                        {...register("word")}
+                        {...register("frenchWord")}
                       />
-                      {errors.word ? (
+                      {errors.frenchWord ? (
                         <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                           <svg
                             className="w-5 h-5 text-red-500"
@@ -73,8 +92,8 @@ const addWord: FC = () => {
                         </div>
                       ) : null}
                     </div>{" "}
-                    {errors.word?.message ? (
-                      <p className="mt-2 text-xs text-red-600" id="email-error">
+                    {errors.frenchWord?.message ? (
+                      <p className="mt-2 text-xs text-red-600" id="word-error">
                         Please include a valid word
                       </p>
                     ) : null}
@@ -82,25 +101,21 @@ const addWord: FC = () => {
                   {/* End Form Group */}
                   {/* Form Group */}
                   <div>
-                    <div className="flex items-center justify-between">
-                      <label
-                        htmlFor="language"
-                        className="block mb-2 text-sm dark:text-white"
-                      >
-                        Language
-                      </label>
-                    </div>
+                    <label
+                      htmlFor="english"
+                      className="block mb-2 text-sm dark:text-white"
+                    >
+                      English Word
+                    </label>
                     <div className="relative">
-                      <select
-                        id="language"
+                      <input
+                        type="text"
+                        id="english"
                         className="block w-full px-4 py-3 text-sm border border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
-                        aria-describedby="language-error"
-                        {...register("language")}
-                      >
-                        <option value="en">English</option>
-                        <option value="fr">French</option>
-                      </select>
-                      {errors.language ? (
+                        aria-describedby="word-error"
+                        {...register("englishWord")}
+                      />
+                      {errors.englishWord ? (
                         <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                           <svg
                             className="w-5 h-5 text-red-500"
@@ -114,13 +129,10 @@ const addWord: FC = () => {
                           </svg>
                         </div>
                       ) : null}
-                    </div>
-                    {errors.language?.message ? (
-                      <p
-                        className="mt-2 text-xs text-red-600"
-                        id="password-error"
-                      >
-                        1+ characters required
+                    </div>{" "}
+                    {errors.englishWord?.message ? (
+                      <p className="mt-2 text-xs text-red-600" id="word-error">
+                        Please include a valid word
                       </p>
                     ) : null}
                   </div>
@@ -130,6 +142,13 @@ const addWord: FC = () => {
                     disabled={!(isValid || isSubmitting)}
                     className="inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white transition-all bg-blue-500 border border-transparent rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25 disabled:cursor-not-allowed"
                   >
+                    {isSubmitting && (
+                      <span
+                        className="animate-spin inline-block size-4 border-[3px] border-current border-t-transparent text-white rounded-full"
+                        role="status"
+                        aria-label="loading"
+                      ></span>
+                    )}
                     Add word
                   </button>
                 </div>

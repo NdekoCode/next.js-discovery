@@ -9,6 +9,8 @@ export default async function handler(
   if (req.method === "GET") {
     const path = resolve(`utils${sep}data${sep}english.json`);
     const data = await readFile(path, { encoding: "utf-8" });
-    return res.status(200).json(JSON.parse(data));
+    const parseData = JSON.parse(data);
+    console.log(parseData);
+    return res.status(200).json(parseData);
   }
 }

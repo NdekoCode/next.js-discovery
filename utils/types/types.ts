@@ -30,6 +30,11 @@ export type Event = {
   image: string;
   isFeatured: boolean;
 };
+export type LangKey = "en" | "fr";
+export type PostData = {
+  word: string;
+  language: LangKey;
+};
 export interface ITranslation {
   en: string;
   fr: string;
