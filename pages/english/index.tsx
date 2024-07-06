@@ -1,10 +1,12 @@
 import { FC } from 'react';
 
+import { BASE_URL } from '../../utils/data/constants';
 import { IEnglish } from '../../utils/types';
 
 export const getStaticProps = async () => {
+  console.log(BASE_URL);
   const data = ((await (
-    await fetch("http://localhost:3000/api/english")
+    await fetch(BASE_URL+"/api/english")
   ).json()) as unknown) as {
     englishList: IEnglish[];
   };
@@ -17,6 +19,7 @@ export const getStaticProps = async () => {
   };
 };
 const index: FC<{ englishList: IEnglish[] }> = ({ englishList }) => {
+  console.log(BASE_URL);
   const englishDataKeys = englishList.map((item) => {
     return Object.keys(item)[0];
   });
