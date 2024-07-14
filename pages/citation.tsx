@@ -30,7 +30,8 @@ const citation: FC<{ citations: Quote[] }> = (props) => {
   );
 };
 export const getStaticProps = async () => {
-  if (!process.env.NEXT_QUOTE_API_KEY) {
+  const QUOTE_API = process.env.NEXT_QUOTE_API_KEY;
+  if (!QUOTE_API) {
     console.log("NEXT_QUOTE_API is NOT DEFINED");
     return {
       props: {
@@ -43,7 +44,7 @@ export const getStaticProps = async () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "X-Api-Key": process.env.NEXT_QUOTE_API_KEY,
+        "X-Api-Key": QUOTE_API,
       },
     })
   ).json();
