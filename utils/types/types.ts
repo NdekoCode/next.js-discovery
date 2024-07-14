@@ -42,3 +42,9 @@ export interface ITranslation {
 export type IEnglish = {
   [key: string]: ITranslation;
 };
+export type Todo = {
+  userId: number;
+  id: number;
+  title: string;
+  completed: boolean;
+};
