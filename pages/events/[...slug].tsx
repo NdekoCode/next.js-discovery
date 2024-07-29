@@ -2,45 +2,19 @@ import {
     GetStaticPaths, GetStaticPathsContext, GetStaticProps, GetStaticPropsContext, NextPage
 } from 'next';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
+import { notFound } from 'next/navigation';
 
-import { Loading } from '../../components';
 import DataNotFound from '../../components/DataNotFound';
 import { EventsList } from '../../components/events';
 import { Button } from '../../components/ui';
-import { DUMMY_EVENTS } from '../../utils/data/constants';
+import { getAllEvents, getAllFilteredEvents } from '../../utils/helpers/api';
 import { Event } from '../../utils/types';
 
-const FilterEventsPage: NextPage = () => {
-  const events = DUMMY_EVENTS;
-  let filteredEvents: Event[] = [];
-  const router = useRouter();
-  const paramsData: string[] = router.query?.slug as string[];
-  if (!paramsData) {
-    return <Loading />;
-  }
-  const selectedYear = +(paramsData[0] || "");
-  const selectedMonth = +(paramsData[1] || "");
-  const currentYear = new Date().getFullYear();
-
-  if (
-    isNaN(selectedYear) ||
-    isNaN(selectedMonth) ||
-    selectedYear > currentYear ||
-    selectedMonth < 1 ||
-    selectedMonth > 12
-  ) {
+const FilterEventsPage: NextPage<{
+  filteredEvents: Event[];
+}> = ({ filteredEvents }) => {
+  if (!filteredEvents) {
     return <DataNotFound />;
-  }
-  if (selectedYear && selectedMonth) {
-    filteredEvents = events.filter((event) => {
-      const date = new Date(event.date);
-
-      return (
-        date.getFullYear() === selectedYear &&
-        date.getMonth() + 1 === selectedMonth
-      );
-    });
   }
   return (
     <>
@@ -66,24 +40,51 @@ export const getStaticPaths: GetStaticPaths = async (
   context: GetStaticPathsContext
 ) => {
   console.log("Static Paths", context);
-  return {
-    paths: [
-      {
-        params: {
-          slug: [""],
-        },
+  const events = await getAllEvents();
+  const paths = events.map((event) => {
+    const eventDate = new Date(event.date);
+    return {
+      params: {
+        slug: [
+          eventDate.getFullYear().toString(),
+          eventDate.getMonth().toString(),
+        ],
       },
-    ],
-    fallback: true,
-  };
+    };
+  });
+  return { paths, fallback: true };
 };
 export const getStaticProps: GetStaticProps = async (
   context: GetStaticPropsContext
 ) => {
   console.log("Static Props", context);
-  const params = context.params;
+
+  let filteredEvents: Event[] = [];
+  const paramsData: string[] = context.params?.slug as string[];
+  if (!paramsData) {
+    return notFound();
+  }
+  const selectedYear = +(paramsData[0] || "");
+  const selectedMonth = +(paramsData[1] || "");
+  const currentYear = new Date().getFullYear();
+
+  if (
+    isNaN(selectedYear) ||
+    isNaN(selectedMonth) ||
+    selectedYear > currentYear ||
+    selectedMonth < 1 ||
+    selectedMonth > 12
+  ) {
+    return notFound();
+  }
+  if (selectedYear && selectedMonth) {
+    filteredEvents = await getAllFilteredEvents({
+      year: selectedYear,
+      month: selectedMonth,
+    });
+  }
   return {
-    props: {},
+    props: { filteredEvents },
   };
 };
 export default FilterEventsPage;
