@@ -2,7 +2,6 @@ import {
     GetStaticPaths, GetStaticPathsContext, GetStaticProps, GetStaticPropsContext, NextPage
 } from 'next';
 import Head from 'next/head';
-import { notFound } from 'next/navigation';
 
 import DataNotFound from '../../components/DataNotFound';
 import { EventsList } from '../../components/events';
@@ -62,7 +61,9 @@ export const getStaticProps: GetStaticProps = async (
   let filteredEvents: Event[] = [];
   const paramsData: string[] = context.params?.slug as string[];
   if (!paramsData) {
-    return notFound();
+    return {
+      notFound: true,
+    };
   }
   const selectedYear = +(paramsData[0] || "");
   const selectedMonth = +(paramsData[1] || "");
@@ -75,7 +76,9 @@ export const getStaticProps: GetStaticProps = async (
     selectedMonth < 1 ||
     selectedMonth > 12
   ) {
-    return notFound();
+    return {
+      notFound: true,
+    };
   }
   if (selectedYear && selectedMonth) {
     filteredEvents = await getAllFilteredEvents({
