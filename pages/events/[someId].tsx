@@ -1,21 +1,16 @@
-import { readFile } from 'fs/promises';
 import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { join } from 'path';
 
 import DataNotFound from '../../components/DataNotFound';
 import { EventDetails } from '../../components/events';
-import { getEventById } from '../../utils/data/constants';
+import { getAllEvents, getSingleEvent } from '../../utils/helpers/api';
 import { Event } from '../../utils/types';
 
 type SingleEventProps = {
   someId: string;
+  event: Event | null;
 };
-const SingleEvent: NextPage<SingleEventProps> = () => {
-  const router = useRouter();
-  const someId = router.query.someId as string;
-  const event = getEventById(someId);
+const SingleEvent: NextPage<SingleEventProps> = ({ event, someId }) => {
   return (
     <>
       <Head>
@@ -28,12 +23,7 @@ const SingleEvent: NextPage<SingleEventProps> = () => {
   );
 };
 export const getStaticPaths = async () => {
-  const path = join(process.cwd(), "utils", "data", "events.json");
-  const { events } = JSON.parse(
-    await readFile(path, {
-      encoding: "utf-8",
-    })
-  ) as { events: Event[] };
+  const events = await getAllEvents();
   const paths = events.map((item) => ({
     params: {
       someId: item.id,
@@ -48,13 +38,7 @@ export const getStaticProps: GetStaticProps<{ event: Event }> = async (
   context
 ) => {
   const { params } = context;
-  const path = join(process.cwd(), "utils", "data", "events.json");
-  const { events } = JSON.parse(
-    await readFile(path, {
-      encoding: "utf-8",
-    })
-  ) as { events: Event[] };
-  const event = events.find((event) => event.id === params?.someId)!;
+  const event = await getSingleEvent(params?.someId as string)!;
   return {
     props: {
       event,

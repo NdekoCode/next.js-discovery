@@ -1,10 +1,9 @@
-import { readFile } from 'fs/promises';
 import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { join } from 'path';
 
 import { EventSearch, EventsList } from '../../components/events';
+import { getAllEvents } from '../../utils/helpers/api';
 import { Event } from '../../utils/types';
 
 const EventPage: NextPage<{ events: Event[] }> = ({ events }) => {
@@ -30,11 +29,7 @@ const EventPage: NextPage<{ events: Event[] }> = ({ events }) => {
 export const getStaticProps: GetStaticProps<{ events: Event[] }> = async (
   context
 ) => {
-  const path = join(process.cwd(), "utils", "data", "events.json");
-  const data = await readFile(path, {
-    encoding: "utf-8",
-  });
-  const { events } = JSON.parse(data) as { events: Event[] };
+  const events = await getAllEvents();
   console.log(events);
   return {
     props: { events },

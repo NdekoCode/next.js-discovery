@@ -1,4 +1,6 @@
-import { NextPage } from 'next';
+import {
+    GetStaticPaths, GetStaticPathsContext, GetStaticProps, GetStaticPropsContext, NextPage
+} from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
@@ -30,7 +32,7 @@ const FilterEventsPage: NextPage = () => {
   ) {
     return <DataNotFound />;
   }
-  if (selectedYear &&   selectedMonth) {
+  if (selectedYear && selectedMonth) {
     filteredEvents = events.filter((event) => {
       const date = new Date(event.date);
 
@@ -60,5 +62,28 @@ const FilterEventsPage: NextPage = () => {
     </>
   );
 };
-
+export const getStaticPaths: GetStaticPaths = async (
+  context: GetStaticPathsContext
+) => {
+  console.log("Static Paths", context);
+  return {
+    paths: [
+      {
+        params: {
+          slug: [""],
+        },
+      },
+    ],
+    fallback: true,
+  };
+};
+export const getStaticProps: GetStaticProps = async (
+  context: GetStaticPropsContext
+) => {
+  console.log("Static Props", context);
+  const params = context.params;
+  return {
+    props: {},
+  };
+};
 export default FilterEventsPage;
