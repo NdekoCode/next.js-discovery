@@ -1,5 +1,5 @@
 import {
-    GetStaticPaths, GetStaticPathsContext, GetStaticProps, GetStaticPropsContext, NextPage
+  GetStaticPaths, GetStaticPathsContext, GetStaticProps, GetStaticPropsContext, NextPage
 } from 'next';
 import Head from 'next/head';
 
@@ -11,14 +11,18 @@ import { Event } from '../../utils/types';
 
 const FilterEventsPage: NextPage<{
   filteredEvents: Event[];
-}> = ({ filteredEvents }) => {
+  year: number;
+  month: number;
+}> = ({ filteredEvents, year, month }) => {
   if (!filteredEvents) {
     return <DataNotFound />;
   }
   return (
     <>
       <Head>
-        <title>My Events</title>
+        <title>
+          My filtered Events from {month}/{year}
+        </title>
       </Head>
 
       <div className="container my-20">
@@ -87,7 +91,7 @@ export const getStaticProps: GetStaticProps = async (
     });
   }
   return {
-    props: { filteredEvents },
+    props: { filteredEvents, year: selectedYear, month: selectedMonth },
   };
 };
 export default FilterEventsPage;

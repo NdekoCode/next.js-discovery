@@ -14,7 +14,8 @@ const SingleEvent: NextPage<SingleEventProps> = ({ event, someId }) => {
   return (
     <>
       <Head>
-        <title>My Event {someId}</title>
+        <title>My Event {event?.title}</title>
+        <meta name="description" content={event?.description} />
       </Head>
       <div className="container my-20">
         {event ? <EventDetails event={event} /> : <DataNotFound />}
