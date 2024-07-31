@@ -6,7 +6,7 @@ export const fetcher = (...args: Parameters<typeof fetch>) =>
 export const getAllEvents = async () => {
   const events = await (await fetch(
     "http://localhost:3000/api/events"
-  )).json();
+  )).json() as Event[];
   if (!events) {
     return null;
   }
