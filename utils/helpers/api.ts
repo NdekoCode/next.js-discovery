@@ -1,23 +1,24 @@
+
 import { Event } from '../types/index';
 
+export const fetcher = (...args: Parameters<typeof fetch>) =>
+  fetch(...args).then((res) => res.json());
 export const getAllEvents = async () => {
-  if (typeof window === "undefined") {
-    const { readFile } = await import("fs/promises");
-    const { join } = await import("path");
-
-    const path = join(process.cwd(), "utils", "data", "events.json");
-    const data = await readFile(path, {
-      encoding: "utf-8",
-    });
-    const { events } = JSON.parse(data) as { events: Event[] };
-    return events;
+  const events = await (await fetch(
+    "http://localhost:3000/api/events"
+  )).json();
+  if (!events) {
+    return null;
   }
-  throw new Error("getAllEvents should only be called server-side");
+  return events;
 };
 
 export const getSingleEvent = async (eventId: string) => {
   const events = await getAllEvents();
-  const event = events.find((event) => event.id === eventId)!;
+  if (!events) {
+    return null;
+  }
+  const event = events?.find((event) => event.id === eventId)!;
   return event;
 };
 export const getAllFilteredEvents = async (dateFilter: {
@@ -26,12 +27,15 @@ export const getAllFilteredEvents = async (dateFilter: {
 }): Promise<Event[]> => {
   const { year, month } = dateFilter;
 
-  let filteredEvents = (await getAllEvents()).filter((event) => {
+  let filteredEvents = (await getAllEvents())?.filter((event) => {
     const eventDate = new Date(event.date);
     return (
       eventDate.getFullYear() === year && eventDate.getMonth() === month - 1
     );
   });
+  if (!filteredEvents) {
+    return [];
+  }
 
   return filteredEvents;
 };

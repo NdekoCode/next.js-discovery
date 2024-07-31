@@ -25,6 +25,11 @@ const SingleEvent: NextPage<SingleEventProps> = ({ event, someId }) => {
 };
 export const getStaticPaths = async () => {
   const events = await getAllEvents();
+  if(!events){
+    return {
+      paths:[]
+    }
+  }
   const paths = events.map((item) => ({
     params: {
       someId: item.id,
@@ -40,6 +45,11 @@ export const getStaticProps: GetStaticProps<{ event: Event }> = async (
 ) => {
   const { params } = context;
   const event = await getSingleEvent(params?.someId as string)!;
+  if (!event) {
+    return {
+      notFound: true,
+    };
+  }
   return {
     props: {
       event,

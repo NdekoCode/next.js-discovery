@@ -1,5 +1,5 @@
 import {
-  GetStaticPaths, GetStaticPathsContext, GetStaticProps, GetStaticPropsContext, NextPage
+    GetStaticPaths, GetStaticPathsContext, GetStaticProps, GetStaticPropsContext, NextPage
 } from 'next';
 import Head from 'next/head';
 
@@ -44,6 +44,9 @@ export const getStaticPaths: GetStaticPaths = async (
 ) => {
   console.log("Static Paths", context);
   const events = await getAllEvents();
+  if (!events) {
+    return { paths: [], fallback: false };
+  }
   const paths = events.map((event) => {
     const eventDate = new Date(event.date);
     return {
@@ -60,8 +63,6 @@ export const getStaticPaths: GetStaticPaths = async (
 export const getStaticProps: GetStaticProps = async (
   context: GetStaticPropsContext
 ) => {
-  console.log("Static Props", context);
-
   let filteredEvents: Event[] = [];
   const paramsData: string[] = context.params?.slug as string[];
   if (!paramsData) {

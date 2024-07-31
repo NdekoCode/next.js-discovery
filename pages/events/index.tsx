@@ -30,6 +30,11 @@ export const getStaticProps: GetStaticProps<{ events: Event[] }> = async (
   context
 ) => {
   const events = await getAllEvents();
+  if (!events) {
+    return {
+      notFound: true,
+    };
+  }
   console.log(events);
   return {
     props: { events },
