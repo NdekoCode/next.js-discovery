@@ -2,6 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
+import { Event } from '../../../utils/types';
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
