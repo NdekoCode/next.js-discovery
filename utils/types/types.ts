@@ -21,6 +21,13 @@ export type metaDataType = {
   description: string;
 };
 
+export interface IComment {
+  eventId: string;
+  id: string;
+  name: string;
+  email: string;
+  body: string;
+}
 export type Event = {
   id: string;
   title: string;
