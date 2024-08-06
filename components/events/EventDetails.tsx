@@ -1,6 +1,6 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
-import { Event } from '../../utils/types';
+import { Event, IComment } from '../../utils/types';
 import { AddressIcon, DateIcon } from '../icons';
 import CommentForm from './CommentForm';
 import Comments from './Comments';
@@ -11,6 +11,9 @@ type EventProps = {
 
 export const EventDetails: FC<EventProps> = ({ event }) => {
   const [isShown, setIsShown] = useState(false);
+
+  const [dataComments, setDataComment] = useState<IComment[]>([]);
+  const [isUpdated, setIsUpdated] = useState(false);
   const humanReadableDate = new Date(event.date).toLocaleDateString("en-US", {
     day: "numeric",
     month: "long",
@@ -18,6 +21,21 @@ export const EventDetails: FC<EventProps> = ({ event }) => {
   });
   const readableAddress = event.location.replace(",", "\n");
   const imageLink = `/${event.image}`;
+
+  const getComments = async () => {
+    try {
+      const data = await (await fetch(`/api/comments/${event.id}`)).json();
+      if (data) {
+        setDataComment(() => data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getComments();
+  }, [isUpdated]);
   return (
     <main className="container flex flex-col items-center gap-y-10">
       <div className="space-y-5 md:space-y-8">
@@ -56,15 +74,15 @@ export const EventDetails: FC<EventProps> = ({ event }) => {
 
       <button
         type="button"
-        className="inline-flex items-center px-4 py-3 text-sm font-medium text-white bg-teal-500 border border-transparent rounded-lg gap-x-2 hover:bg-teal-600 focus:outline-none focus:bg-teal-600 disabled:opacity-50 disabled:pointer-events-none"
+        className="inline-flex items-center px-4 py-3 text-sm font-medium text-white capitalize bg-teal-500 border border-transparent rounded-lg gap-x-2 hover:bg-teal-600 focus:outline-none focus:bg-teal-600 disabled:opacity-50 disabled:pointer-events-none"
         onClick={() => setIsShown((d) => !d)}
       >
-        Button
+        Show comment block
       </button>
       {isShown && (
         <>
-          <CommentForm eventId={event.id} />
-          <Comments comments={null} />
+          <CommentForm eventId={event.id} getComments={getComments} />
+          {<Comments comments={dataComments} />}
         </>
       )}
     </main>

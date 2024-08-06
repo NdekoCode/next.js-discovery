@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { readFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
 import { IComment } from '../../../utils/types';
@@ -19,6 +19,7 @@ export default async function handler(
     const comment = req.body.comment as IComment;
     if (comment) {
       comments.push(comment);
+      await writeFile(path, JSON.stringify(comments, null, 2));
       return res.status(201).json({
         message: "Comment add successfully",
         status: 201,

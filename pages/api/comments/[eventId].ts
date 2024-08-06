@@ -16,10 +16,11 @@ export default async function handler(
       const data = await readFile(path, {
         encoding: "utf-8",
       });
+      console.log(data);
       const comments = JSON.parse(data) as IComment[];
-      const comment = comments.find((e) => e.eventId === id);
-      if (comment) {
-        return res.status(200).json(comment);
+      const commentData = comments.filter((e) => e.eventId === id);
+      if (commentData) {
+        return res.status(200).json(commentData);
       }
 
       return res.status(404).json({
