@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import { EventSearch, EventsList } from '../../components/events';
+import NewsletterForm from '../../components/events/Newsletter';
 import { getAllEvents } from '../../utils/helpers/api';
 import { Event } from '../../utils/types';
 
@@ -22,6 +23,7 @@ const EventPage: NextPage<{ events: Event[] }> = ({ events }) => {
       <div className="container mt-10">
         <EventSearch onSearch={findEventHandler} />
         <EventsList events={events} />
+        <NewsletterForm />
       </div>
     </>
   );
