@@ -36,7 +36,7 @@ const NewsletterForm = () => {
           className="w-full sm:w-auto whitespace-nowrap py-2 px-2.5 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-md border border-transparent bg-gray-800 text-white hover:bg-gray-900 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
           href="#"
         >
-          Join
+          Register
           <svg
             className="shrink-0 size-3.5"
             xmlns="http://www.w3.org/2000/svg"
