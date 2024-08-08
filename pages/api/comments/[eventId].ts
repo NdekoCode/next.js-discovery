@@ -1,8 +1,5 @@
+import { MongoClient } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { readFile } from 'node:fs/promises';
-import { join } from 'node:path';
-
-import { IComment } from '../../../utils/types';
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,15 +9,16 @@ export default async function handler(
     console.log("Body", req.query);
     const id = req.query.eventId;
     if (id) {
-      const path = join(process.cwd(), "utils", "data", "comments.json");
-      const data = await readFile(path, {
-        encoding: "utf-8",
-      });
-      console.log(data);
-      const comments = JSON.parse(data) as IComment[];
-      const commentData = comments.filter((e) => e.eventId === id);
-      if (commentData) {
-        return res.status(200).json(commentData);
+      const MONGO_URL = process.env.NEXT_MONGO_DB_URL!;
+      const client = await MongoClient.connect(MONGO_URL);
+      const db = client.db("nextjs-discovery");
+      const comments = await db
+        .collection("comments")
+        .find({ eventId: id })
+        .toArray();
+      console.log(comments);
+      if (comments) {
+        return res.status(200).json(comments);
       }
 
       return res.status(404).json({
