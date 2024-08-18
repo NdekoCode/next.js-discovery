@@ -1,15 +1,18 @@
 import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
-import { BlogContent } from '@/components';
-import { CounterContextProvider } from '@/context/CounterContext';
-import { Post } from '@/utils/types/types';
+import { BlogContent } from '../../../components';
+import { CounterContextProvider } from '../../../context/CounterContext';
+import { Post } from '../../../utils/types/types';
 
-type BlogProps = {
+type PostProps = {
   posts: Post[];
   date: string;
 };
-const Blog: NextPage<BlogProps> = ({ posts, date }) => {
+const AllPostPage: NextPage<PostProps> = ({ posts, date }) => {
+  const router = useRouter();
+  console.log(router.query);
   return (
     <CounterContextProvider>
       <Head>
@@ -24,7 +27,7 @@ const Blog: NextPage<BlogProps> = ({ posts, date }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps<BlogProps> = async () => {
+export const getStaticProps: GetStaticProps<PostProps> = async () => {
   const posts = await fetch(
     "https://jsonplaceholder.typicode.com/posts?_limit=12"
   ).then((res) => res.json());
@@ -37,4 +40,4 @@ export const getStaticProps: GetStaticProps<BlogProps> = async () => {
   };
 };
 
-export default Blog;
+export default AllPostPage;

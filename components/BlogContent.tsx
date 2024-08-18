@@ -1,27 +1,25 @@
-import Image from "next/image";
-import Link from "next/link";
-import { NextRouter, useRouter } from "next/router";
-import { FC } from "react";
-import { useCounterContext } from "../context/CounterContext";
-import image1 from "../public/assets/images/01.jpg";
-import image2 from "../public/assets/images/02.jpg";
-import image3 from "../public/assets/images/03.jpg";
-import { Post } from "../utils/types/types";
+import Image from 'next/image';
+import Link from 'next/link';
+import { NextRouter, useRouter } from 'next/router';
+import { FC } from 'react';
+
+import image1 from '@/public/assets/images/01.jpg';
+import image2 from '@/public/assets/images/02.jpg';
+import image3 from '@/public/assets/images/03.jpg';
+import { Post } from '@/utils/types/types';
+
 type BlogContentProps = {
   posts: Post[];
 };
 export const BlogContent: FC<BlogContentProps> = ({ posts }) => {
-  const { count, increment } = useCounterContext();
   const router: NextRouter = useRouter();
   const goHome = () => router.push("/");
   return (
     <div className="prose">
       <main>
         <h1>Mon blog</h1>
-        <p>Compteur: {count}</p>
-        <button onClick={() => increment()}>Increment</button>
         <div className="container px-3 mx-auto max-w-7xl lg:px-0">
-          {posts ? (
+          {posts && posts.length > 0 ? (
             <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {posts.map((post) => (
                 <li

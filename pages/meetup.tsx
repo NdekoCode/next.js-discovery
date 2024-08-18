@@ -1,9 +1,11 @@
-import { NextPage } from "next";
-import Head from "next/head";
-import { useEffect, useState } from "react";
-import { Loading } from "../components";
-import { Meetup } from "../components/meetup";
-import { metaDataType } from "../utils/types";
+import { NextPage } from 'next';
+import Head from 'next/head';
+import { Fragment, useEffect, useState } from 'react';
+
+import { Loading } from '../components';
+import { Meetup } from '../components/meetup';
+import { metaDataType } from '../utils/types';
+
 const MeetupPage: NextPage = () => {
   const [loading, setLoading] = useState(true);
   const [meetupData, setMeetupData] = useState<metaDataType[]>([]);
@@ -29,7 +31,7 @@ const MeetupPage: NextPage = () => {
   }, []);
 
   return (
-    <>
+    <Fragment>
       <Head>
         <title>Meetup</title>
       </Head>
@@ -43,7 +45,7 @@ const MeetupPage: NextPage = () => {
           ) : null}
         </div>
       </div>
-    </>
+    </Fragment>
   );
 };
 export default MeetupPage;

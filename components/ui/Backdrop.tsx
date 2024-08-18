@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC } from 'react';
 
 export const Backdrop: FC<{
   isActive?: boolean;
@@ -6,7 +6,7 @@ export const Backdrop: FC<{
 }> = ({ isActive = undefined, onActive }) => {
   return (
     <div
-      className={`backdrop-item ${isActive && "hidden"}`}
+      className={`backdrop-item fixed inset-0 bg-black/5 ${isActive && "hidden"}`}
       onClick={onActive}
     />
   );

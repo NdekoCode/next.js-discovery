@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { NextRouter, useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-import { Post } from '../../utils/types/types';
+import { Post } from '../../../utils/types/types';
 
 type ReadProps = {
   post: Post;
